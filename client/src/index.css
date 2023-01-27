@@ -2,4 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik&family=Josefin+Sans:wght@700&display=swap');
+
+body {
+    background-color: navy;
+}
+
+.cities {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.city {
+    background-color: salmon;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 4px;
+    line-height: 16px;
+    opacity: 0.8;
+    font-weight: bold;
+}
+
+.city:hover {
+    cursor: pointer;
+    background-color: burlywood;
+    color: navy;
+    transition-property: color, background-color;
+    transition: 200ms;
+    padding: 12px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 24px;
+    font-weight: bold;
+    font-size: 32px;
+    color: wheat;
+}
