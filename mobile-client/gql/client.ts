@@ -1,4 +1,7 @@
+import Constants from "expo-constants";
+const env = Constants.expoConfig?.extra || {};
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+
 
 //https://www.apollographql.com/docs/react/networking/authentication/#cookie
 export default new ApolloClient({
@@ -9,7 +12,7 @@ export default new ApolloClient({
         },
     },
     link: createHttpLink({
-        uri: "http://localhost:4000",
+        uri: env.GRAPHQL_API_URL,
         credentials: "include",
     }),
 });
