@@ -18,6 +18,7 @@ export type Scalars = {
 export type City = {
   __typename?: 'City';
   id: Scalars['Float'];
+  image?: Maybe<Scalars['String']>;
   name: Scalars['String'];
 };
 
@@ -56,7 +57,7 @@ export type Query = {
 export type CitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CitiesQuery = { __typename?: 'Query', cities: Array<{ __typename?: 'City', id: number, name: string }> };
+export type CitiesQuery = { __typename?: 'Query', cities: Array<{ __typename?: 'City', id: number, name: string, image?: string | null }> };
 
 
 export const CitiesDocument = gql`
@@ -64,6 +65,7 @@ export const CitiesDocument = gql`
   cities {
     id
     name
+    image
   }
 }
     `;

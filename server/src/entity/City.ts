@@ -41,12 +41,15 @@ export class CityInput {
 @Entity()
 @ObjectType()
 export class City {
-    @PrimaryGeneratedColumn()
     @Field()
+    @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
     @Field()
+    @Column()
     name: string;
-}
->>>>>>> origin
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    image?: string;
+}>>>>>>> origin
