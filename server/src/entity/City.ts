@@ -5,6 +5,8 @@ import {Field, InputType, ObjectType} from "type-graphql";
 export class CityInput {
     @Field()
     name: string;
+    @Field()
+    image?: string;
 }
 
 @Entity()
