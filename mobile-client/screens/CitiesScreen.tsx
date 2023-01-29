@@ -2,7 +2,6 @@ import {StatusBar} from 'expo-status-bar';
 import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useCitiesQuery} from "../gql/generated/schema";
 import CityListItem from "../components/CityListItem";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 
 export default function CitiesScreen({navigation}) {

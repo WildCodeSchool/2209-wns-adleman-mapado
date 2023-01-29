@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         marginTop: 20,
-
     },
     buttonText: {
         color: "#EC5D5B"
