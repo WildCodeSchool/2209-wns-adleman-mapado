@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from "react-native-screens/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CitiesScreen from "./screens/CitiesScreen";
 import CityInfoScreen from "./screens/CityInfoScreen";
+import {StyleSheet} from "react-native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,7 +25,7 @@ export default function App() {
         <ApolloProvider client={client}>
             <NavigationContainer>
                 <Tab.Navigator
-                    screenOptions={({route}) => ({
+                    screenOptions={ ({route}) => ({
                         tabBarIcon: ({focused, color, size}) => {
                             if (route.name === "Login") {
                                 return (
