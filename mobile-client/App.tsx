@@ -2,11 +2,23 @@ import client from "./gql/client"
 import {ApolloProvider} from "@apollo/client";
 import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createNativeStackNavigator} from "react-native-screens/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CitiesScreen from "./screens/CitiesScreen";
+import CityInfoScreen from "./screens/CityInfoScreen";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
+
+function Cities() {
+    return (
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Home" component={CitiesScreen} />
+            <Stack.Screen name="Info" component={CityInfoScreen} />
+        </Stack.Navigator>
+    )
+}
 export default function App() {
     return (
         <ApolloProvider client={client}>
@@ -40,7 +52,7 @@ export default function App() {
                         tabBarStyle: {height: 60, paddingBottom: 10},
                     })}
                 >
-                    <Tab.Screen name="Cities" component={CitiesScreen}/>
+                    <Tab.Screen name="Cities" component={Cities}/>
                     <Tab.Screen name="Login" component={CitiesScreen}/>
                 </Tab.Navigator>
             </NavigationContainer>
