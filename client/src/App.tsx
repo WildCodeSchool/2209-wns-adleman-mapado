@@ -86,7 +86,7 @@ const cities = data?.cities || []
     <div style={styles}>
       <Header />
       <Routes>
-      <Route path="/" element={<Home cities={cities} />} />
+      <Route path="/" element={<Home  />} />
       <Route path="/manage-cities" element={<AddManageCities cities={cities}/>} />
       </Routes>
     </div>
