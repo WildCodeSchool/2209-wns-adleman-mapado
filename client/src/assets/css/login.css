@@ -1,0 +1,58 @@
+.loginPage {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #3270F4;
+}
+
+.loginContainer {
+    height: 100vh;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #E2FE53;
+}
+
+.loginInput {
+    text-align: center;
+    border-radius: 10px;
+    width: 20rem;
+    height: 2.5rem;
+}
+
+.primaryButton {
+    height: 2.5rem;
+    width: 15rem;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border: 3px solid #EC5D5C;
+}
+
+.secondaryButton {
+    height: 2.5rem;
+    width: 15rem;
+    border-radius: 15px;
+    border: 3px solid #EC5D5C;
+}
+
+.tertiaryButton {
+    color: #EC5D5C;
+    font-weight: 700;
+}
+
+.loginIcon {
+    height: 15rem;
+    width: auto;
+}
+
+.loginTitle{
+    font-family: sans-serif, Rubik;
+    font-weight: 80;
+    font-size: 3rem;
+    color: #000000;
+}
