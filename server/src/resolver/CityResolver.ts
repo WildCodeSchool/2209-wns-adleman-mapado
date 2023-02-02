@@ -24,11 +24,11 @@ export class CityResolver {
     @Mutation(() => City)
     async updateCity(
         @Arg("id", () => Int) id: number,
-        @Arg("data") { name, image, longitude, latitude }: CityInput
+        @Arg("data") { name, photo, longitude, latitude }: CityInput
     ): Promise<City> {
         const { affected } = await datasource
             .getRepository(City)
-            .update(id, { name, image, longitude, latitude });
+            .update(id, { name, photo, longitude, latitude });
 
         if (affected === 0) throw new ApolloError("City not found", "NOT_FOUND");
 
