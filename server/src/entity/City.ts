@@ -18,6 +18,21 @@ export class CityInput{
     latitude?: number;
 }
 
+@InputType()
+export class UpdateCityInput{
+    @Field()
+    name?: string;
+
+    @Field({ nullable: true })
+    photo?: string;
+
+    @Field(()=>Float, {nullable: true})
+    longitude?: number;
+
+    @Field(()=>Float, {nullable: true})
+    latitude?: number;
+}
+
 @Entity()
 @ObjectType()
 export default class City {
@@ -34,11 +49,11 @@ export default class City {
     photo?: string;
 
     @Field(()=>Float, {nullable: true})
-    @Column({nullable: true, type: "int"})
+    @Column({nullable: true, type: "decimal"})
     latitude?: number;
 
     @Field(()=>Float, {nullable: true})
-    @Column({nullable: true, type: "int"})
+    @Column({nullable: true, type: "decimal"})
     longitude?: number;
 
     @Field(()=>[User],{nullable: true})
