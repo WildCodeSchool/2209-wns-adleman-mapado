@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "start": "ts-node-dev --poll src/index.ts",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q index.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "ts-node-dev seed.ts"
   },
   "keywords": [],
   "author": "",

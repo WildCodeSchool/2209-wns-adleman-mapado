@@ -25,9 +25,9 @@ class Poi {
     @Column({ length: 25 })
     name: string;
 
-    @Field()
-    @Column()
-    gps_coordinates: number;
+    @Field({nullable: true})
+    @Column({nullable: true, type: "int"})
+    gps_coordinates?: number;
 
     @Field({nullable: true})
     @Column({nullable: true, type: "text"})
@@ -66,9 +66,9 @@ class Poi {
     @Column({nullable: true, type: "int"})
     phone?: number;
 
-    @Field()
-    @Column()
-    categoryId: number;
+    @Field({nullable: true})
+    @Column({nullable: true, type: "int"})
+    categoryId?: number;
 
     //Potentiellement à implémenter
     // @Column()
