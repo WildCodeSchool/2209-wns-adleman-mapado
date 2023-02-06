@@ -17,17 +17,20 @@ export type Scalars = {
 
 export type City = {
   __typename?: 'City';
-  City_area: Scalars['String'];
-  Photo: Scalars['String'];
-  User_id: Scalars['Float'];
   id: Scalars['Float'];
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
-  userId: Scalars['Float'];
+  photo?: Maybe<Scalars['String']>;
+  poi?: Maybe<Array<Poi>>;
+  users?: Maybe<Array<User>>;
 };
 
 export type CityInput = {
-  image: Scalars['String'];
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
+  photo?: InputMaybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -35,6 +38,7 @@ export type Mutation = {
   createCity: City;
   createUser: User;
   deleteCity: Scalars['Boolean'];
+  deletePoi: Scalars['Boolean'];
   login: Scalars['String'];
   updateCity: City;
 };
@@ -55,6 +59,11 @@ export type MutationDeleteCityArgs = {
 };
 
 
+export type MutationDeletePoiArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type MutationLoginArgs = {
   data: UserInput;
 };
@@ -65,15 +74,37 @@ export type MutationUpdateCityArgs = {
   id: Scalars['Int'];
 };
 
+export type Poi = {
+  __typename?: 'Poi';
+  address: Scalars['String'];
+  audio?: Maybe<Scalars['String']>;
+  categoryId?: Maybe<Scalars['Float']>;
+  comments?: Maybe<Scalars['String']>;
+  customize_gps_marker?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  gps_coordinates?: Maybe<Scalars['Float']>;
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  phone?: Maybe<Scalars['Float']>;
+  photo?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['Float']>;
+  website?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  Pois: Array<Poi>;
   cities: Array<City>;
   users: Array<User>;
 };
 
 export type User = {
   __typename?: 'User';
+  email?: Maybe<Scalars['String']>;
+  hashedPassword?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
+  role?: Maybe<Scalars['String']>;
+  role_id?: Maybe<Scalars['Float']>;
 };
 
 export type UserInput = {
@@ -91,7 +122,7 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __type
 export type CitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CitiesQuery = { __typename?: 'Query', cities: Array<{ __typename?: 'City', id: number, name: string }> };
+export type CitiesQuery = { __typename?: 'Query', cities: Array<{ __typename?: 'City', id: number, name: string, photo?: string | null, latitude?: number | null, longitude?: number | null }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -139,12 +170,14 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
-
 export const CitiesDocument = gql`
     query Cities {
   cities {
     id
     name
+    photo
+    latitude
+    longitude
   }
 }
     `;

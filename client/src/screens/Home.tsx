@@ -37,6 +37,7 @@ export default function Home() {
 
   const {loading: loadingCities, data} = useCitiesQuery()
   const cities=data?.cities || [];
+  console.log(cities)
 
   return (
     <div style={styles}>
@@ -48,7 +49,7 @@ export default function Home() {
 
       {cities.map((city) => {
         return (
-          <CityCard key={city.id} cityName={city.name} />
+          <CityCard key={city.id} cityName={city.name} cityPhoto={city.photo}/>
         );
       })}
     </div>
