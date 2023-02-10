@@ -13,6 +13,8 @@ export default function Logout() {
   const { data: currentUser, client } = useGetProfileQuery();
 
   const [logout] = useLogoutMutation();
+
+  
   return (
     <>
       <a href="/login">

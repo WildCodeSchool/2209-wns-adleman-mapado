@@ -10,7 +10,6 @@ import { Field, InputType, ObjectType } from "type-graphql";
 import City from "./City";
 import { IsEmail, Matches, MinLength } from "class-validator";
 import { argon2id, hash, verify } from "argon2";
-import { userInfo } from "os";
 
 export type Role = "visitor" | "cityAdmin" | "superAdmin";
 
@@ -39,6 +38,14 @@ class User {
 
   @ManyToMany(() => City, (c) => c.id)
   cities?: City[];
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  resetPasswordToken?: string;
+
+  // @Field({ nullable: true })
+  // @Column({ nullable: true })
+  // resetPasswordExpires?: Date;
 }
 
 @InputType()
@@ -51,6 +58,26 @@ export class UserInput {
   @MinLength(8)
   @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
   password: string;
+}
+
+@InputType()
+export class UserChangePassword {
+
+  // @Field()
+  // @PrimaryGeneratedColumn()
+  // id: number;
+
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+  prevPassword: string;
+
+  @Field()
+  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+  newPassword: string;
 }
 
 const hashingOptions = {

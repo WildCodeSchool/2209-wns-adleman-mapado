@@ -12,6 +12,7 @@ import Register from "./screens/Register";
 import bordeaux from "./assets/bordeaux.jpeg";
 import lille from "./assets/lille.jpeg";
 import paris from "./assets/paris.jpeg";
+import PasswordReset from "./screens/PasswordReset";
 
 const styles: CSS.Properties = {
   margin: 0,
@@ -74,7 +75,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="*" element={<Home cities={cities} />} />
+          <Route path="/reset-password" element={<PasswordReset />} />
+          <Route path="/" element={<Home cities={cities} />} />
           <Route
             path="/manage-cities"
             element={<AddManageCities cities={cities} />}
