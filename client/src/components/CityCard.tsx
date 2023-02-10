@@ -20,6 +20,7 @@ export default function CityCard({ cityName, cityPhoto }: any) {
     borderTopLeftRadius: "40px",
     borderTopRightRadius: "40px",
     borderBottomLeftRadius: "40px",
+    border: "1px solid #EC5D5C",
     margin: "2rem",
     color: "#EC5D5C",
     fontFamily: 'Josefin Sans',

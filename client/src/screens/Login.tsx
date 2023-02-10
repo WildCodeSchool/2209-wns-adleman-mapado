@@ -12,7 +12,8 @@ const loginPageStyles: CSS.Properties = {
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  backgroundColor: "#3270F4",
+  backgroundColor: "#FFFFFF",
+  border: "2px solid #E2FE53",
 };
 const loginContainerStyles: CSS.Properties = {
   height: "100vh",
@@ -21,7 +22,7 @@ const loginContainerStyles: CSS.Properties = {
   flexDirection: "column",
   justifyContent: "space-around",
   alignItems: "center",
-  backgroundColor: "#E2FE53",
+  backgroundColor: "#FFFFFF",
 };
 
 const inputStyles: CSS.Properties = {
@@ -29,14 +30,16 @@ const inputStyles: CSS.Properties = {
   borderRadius: "10px",
   width: "20rem",
   height: "2.5rem",
+  border: "2px solid #E2FE53",
 };
 
 const primaryButtonStyles: CSS.Properties = {
   height: "2.5rem",
   width: "15rem",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "#EC5D5C",
   borderRadius: "15px",
   border: "3px solid #EC5D5C",
+  color: "#FFFFFF",
 };
 const secondaryButtonStyles: CSS.Properties = {
   height: "2.5rem",
@@ -124,12 +127,16 @@ export default function Login() {
             }
           ></input>
         </label>
-        <button style={tertiaryButtonStyles}>Mot de passe oublié ?</button>
-        <button type="submit" style={primaryButtonStyles}>
-          Se connecter
-        </button>
-        <button style={secondaryButtonStyles}>Créer un compte</button>
+        <div>
+          <button type="submit" style={primaryButtonStyles}>
+            Se connecter
+          </button>
+          <button style={secondaryButtonStyles}>Créer un compte</button>
+        </div>
       </form>
+      <a href="/reset-password">
+        <button style={tertiaryButtonStyles}>Mot de passe oublié ?</button>
+      </a>
     </div>
   );
 }

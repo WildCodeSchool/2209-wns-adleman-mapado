@@ -17,8 +17,10 @@ import Header from "../components/Header";
 const styles: CSS.Properties = {
   display: "flex",
   flexDirection: "row",
+  alignItems: "center",
   flexWrap: "wrap",
-  margin: "2rem",
+  position: "absolute",
+  backgroundColor: "#FFFFFF"
 };
 const addCityButtonStyles: CSS.Properties = {
   height: "17rem",
