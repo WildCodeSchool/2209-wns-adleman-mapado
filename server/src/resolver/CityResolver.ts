@@ -8,7 +8,7 @@ import {ApolloError} from "apollo-server-errors";
 export class CityResolver {
     @Query(() => [City])
     async cities(): Promise<City[]> {
-        return await datasource.getRepository(City).find();
+        return await datasource.getRepository(City).find({relations: {users: true}});
     }
 
     @Mutation(() => City)
