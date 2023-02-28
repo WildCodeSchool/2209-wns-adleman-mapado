@@ -10,7 +10,7 @@ class Category {
     @Column()
     name: string;
 
-    @OneToMany(() => Poi, (p) => p.category)
+    @OneToMany(() => Poi, (p) => p.categoryId)
     poi: Poi;
 }
 
