@@ -30,6 +30,7 @@ class User {
     @Column({nullable: true, type: "text"})
     role?: Role;
 
+    @Field(() => [City], {nullable: true})
     @ManyToMany(() => City, (c) => c.id)
     cities?: City[];
 }
