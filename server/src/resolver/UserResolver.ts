@@ -1,7 +1,8 @@
 import {ApolloError} from "apollo-server-errors";
-import {Arg, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
 import datasource from "../db";
 import User, {hashPassword, UserInput, verifyPassword} from "../entity/User";
+import City from "../entity/City";
 
 @Resolver(User)
 export class UserResolver {
@@ -17,6 +18,13 @@ export class UserResolver {
             .getRepository(User)
             .save({...data, hashedPassword});
         return user;
+    }
+
+    @Mutation(() => Boolean)
+    async deleteUser(@Arg("id", () => Int) id: number): Promise<boolean> {
+        const {affected} = await datasource.getRepository(User).delete(id);
+        if (affected === 0) throw new ApolloError("User not found", "NOT_FOUND");
+        return true;
     }
 
     @Mutation(() => String)

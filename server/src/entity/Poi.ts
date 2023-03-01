@@ -7,11 +7,14 @@ export class PoiInput{
     @Field()
     name: string;
 
+    @Field()
+    address: string;
+
     @Field({ nullable: true })
     description?: string;
 
     @Field({ nullable: true })
-    rating?: string;
+    rating?: number;
 }
 
 @Entity()
@@ -38,7 +41,7 @@ class Poi {
     address: string;
 
     @Field({nullable: true})
-    @Column({ length: 500 })
+    @Column({ nullable: true, length: 500 })
     description?: string;
 
     @Field({nullable: true})
@@ -53,7 +56,6 @@ class Poi {
     @Column({nullable: true, type: "text"})
     comments?: string;
 
-    // pas sur du type ni de la cohérence
     @Field({nullable: true})
     @Column({nullable: true, type: "text"})
     audio?: string;
@@ -79,9 +81,9 @@ class Poi {
     // @Field()
     // @OneToMany(() => Category, (c) => c.poi)
     // category: Category;
-
-    @ManyToOne(() => City, (c) => c.id)
-    cities?: City;
+    //
+    // @ManyToOne(() => City, (c) => c.id)
+    // cities?: City;
 }
 
 export default Poi;

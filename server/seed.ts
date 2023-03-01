@@ -36,6 +36,24 @@ async function seed(): Promise<void> {
         },
     ]);
 
+    await db.getRepository(User).insert([
+        {
+            id: 1,
+            email: "grisch@wild.com",
+            hashedPassword: "SalutLesCopains33!"
+        },
+        {
+            id: 2,
+            email: "mymy@chu.fr",
+            hashedPassword: "MechMech33!"
+        },
+        {
+            id: 3,
+            email: "leila@croquettes.ca",
+            hashedPassword: "ViveLaBouffe33!"
+        },
+    ])
+
     await db.destroy();
     console.log("done !");
 }
