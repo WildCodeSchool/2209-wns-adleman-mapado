@@ -81,9 +81,10 @@ class Poi {
     // @Field()
     // @OneToMany(() => Category, (c) => c.poi)
     // category: Category;
-    //
-    // @ManyToOne(() => City, (c) => c.id)
-    // cities?: City;
+
+    @Field(() => [City], {nullable: true})
+    @ManyToOne(() => City, (c) => c.id)
+    cities?: City[];
 }
 
 export default Poi;

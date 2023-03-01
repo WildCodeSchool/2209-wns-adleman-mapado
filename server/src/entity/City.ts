@@ -61,7 +61,7 @@ export default class City {
     @JoinTable()
     users?: User[];
 
-    // @Field(() => [Poi], {nullable: true})
-    // @OneToMany(() => Poi, (p) => p.cities, {cascade: true,})
-    // poi?: Poi[];
+    @Field(() => [Poi], {nullable: true})
+    @OneToMany(() => Poi, (p) => p.cities, {cascade: true,})
+    poi?: Poi[];
 }
