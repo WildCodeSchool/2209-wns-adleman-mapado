@@ -22,10 +22,11 @@ const styles: CSS.Properties = {
 function App() {
   const path = window.location.pathname;
 
+
   const { loading: loadingCities, data } = useCitiesQuery();
 
   const cities = data?.cities ?? [];
-  console.log(cities);
+  
   return (
     <>
       <Toaster position="top-center" />

@@ -9,7 +9,7 @@ export default function ForgotPassword({navigation}) {
 
     return (
         <TextInput
-        placeholder="Nom d'utilisateur ou email"
+        placeholder="email"
         style={styles.info}
       />
     );
