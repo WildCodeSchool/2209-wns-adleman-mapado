@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSendPasswordEmailMutation } from "../gql/generated/schema";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import toast from "react-hot-toast";
 
 export default function PasswordReset() {
   const [email, setEmail] = useState({
@@ -41,7 +42,7 @@ const [sendEmail] = useSendPasswordEmailMutation()
           </label>
           <div className={"buttonsContainer"}>
             <button className={"primaryButton"}>Retour</button>
-            <button type="submit" className={"tertiaryButton"} onClick={() => alert("please check your email")}>
+            <button type="submit" className={"tertiaryButton"} onClick={() => toast("please check your email")}>
               Valider
             </button>
           </div>

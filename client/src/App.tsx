@@ -42,7 +42,8 @@ function App() {
             path="/manage-cities"
             element={<ManageCities cities={cities} />}
           />
-          <Route path="/info/:cityName" element={<InfoCity/>}/>
+          <Route path="/info/:cityName" element={<InfoCity />} />
+
           <Route path="/map" element={<Map />} />
         </Routes>
       </div>
