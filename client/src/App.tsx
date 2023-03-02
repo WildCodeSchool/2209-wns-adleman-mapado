@@ -1,5 +1,4 @@
-import { Route, Routes, useParams } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import CSS from "csstype";
 import Login from "./screens/Login";
@@ -42,7 +41,7 @@ function App() {
             element={<ManageCities cities={cities} />}
           />
            <Route path="/info/:cityName" element={<InfoCity/>}/>
-          <Route path="/map" element={<Map />} />
+          {/*<Route path="/map" element={<Map/>} />*/}
         </Routes>
       </div>
     </>

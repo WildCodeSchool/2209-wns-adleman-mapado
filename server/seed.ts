@@ -35,8 +35,7 @@ async function seed(): Promise<void> {
             longitude: 4.8320114
         },
     ]);
-
-
+    
     await db.destroy();
     console.log("done !");
 }
