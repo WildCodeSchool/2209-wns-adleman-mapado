@@ -10,7 +10,6 @@ import { Field, InputType, ObjectType } from "type-graphql";
 import City from "./City";
 import { IsEmail, Matches, MinLength } from "class-validator";
 import { argon2id, hash, verify } from "argon2";
-import { userInfo } from "os";
 
 export type Role = "visitor" | "cityAdmin" | "superAdmin";
 
