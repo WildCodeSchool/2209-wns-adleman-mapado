@@ -1,7 +1,7 @@
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import "../App.css";
 import "leaflet/dist/leaflet.css";
-import CircularProgress from '@mui/material/CircularProgress';
+import Card from "../components/Card";
 
 interface MapProps {
     longitude: number;
@@ -13,23 +13,26 @@ function Map({longitude, latitude}: MapProps) {
     return (
         //Si on a une latitude et longitude on affiche la carte
         longitude && latitude ?(
-        <MapContainer
-            className="map-container"
-            center={[latitude, longitude]}
-            zoom={12}
-            scrollWheelZoom={true}
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {/*<Marker position={[48.85842, 2.3535]}>*/}
-            {/*    <Popup>*/}
-            {/*        A pretty CSS3 popup. <br/> Easily customizable.*/}
-            {/*    </Popup>*/}
-            {/*</Marker>*/}
-        </MapContainer>
-        //     //Si on a pas de longitude et latitude on affiche un loader
+            <Card customClass={"mapCard"}>
+                <MapContainer
+                    className="map-container"
+                    center={[latitude, longitude]}
+                    zoom={12}
+                    scrollWheelZoom={true}
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    {/*<Marker position={[48.85842, 2.3535]}>*/}
+                    {/*    <Popup>*/}
+                    {/*        A pretty CSS3 popup. <br/> Easily customizable.*/}
+                    {/*    </Popup>*/}
+                    {/*</Marker>*/}
+                </MapContainer>
+            </Card>
+
+        //     //Si on a pas de longitude et latitude on affiche un loader 'tailwind loader'
         ) :
         <div className={"mapLoader"}>
             <div role="status">
