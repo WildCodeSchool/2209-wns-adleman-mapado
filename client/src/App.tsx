@@ -38,7 +38,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/password/email" element={<EmailPassword />} />
           <Route path="/password/reset/:id/:token" element={<PasswordReset />} />
-           <Route path="*" element={<Home cities={cities} />} />
+           <Route path="*" element={<Home/>} />
           <Route
             path="/manage-cities"
             element={<ManageCities />}

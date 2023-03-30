@@ -9,7 +9,7 @@ export default new ApolloClient({
         },
     },
     link: createHttpLink({
-        uri: "http://localhost:4000",
+        uri: process.env.REACT_APP_GRAPHQL_API_URL,
         credentials: "include",
     }),
 });
