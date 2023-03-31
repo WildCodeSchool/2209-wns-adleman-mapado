@@ -62,13 +62,14 @@ export class CityResolver {
       headers: { "x-api-key": env.REACT_APP_CITIES_API_KEY },
     };
 
-    let urlCityAPI = "https://api.api-ninjas.com/v1/geocoding?city=" + cityName;
+    let urlCityAPI =
+      "https://api.api-ninjas.com/v1/geocoding?country=FR&city=" + cityName;
 
     const fetchCity = await fetch(urlCityAPI, optionsCityAPI)
       .then((res) => res.json()) // parse response as JSON
       .then((data) => {
         //console.log(data);
-        return data[0];
+        return data.shift();
       })
       .catch((err) => {
         console.log(`error while fetching city coordinates ${err}`);
@@ -82,7 +83,7 @@ export class CityResolver {
     let urlPhotoAPI =
       "https://api.unsplash.com/search/photos?query=" +
       cityName +
-      " architecture monument" +
+      " downtown street france" +
       "&client_id=" +
       optionsCityPhoto.headers["x-api-key"];
 
