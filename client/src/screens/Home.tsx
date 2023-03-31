@@ -1,11 +1,12 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, useSearchParams} from "react-router-dom";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AnimatedCard from "../components/AnimatedCard";
 import ICity from "../interfaces/ICity";
 import {filterBySearch} from "../utils/helpers";
 import {useCitiesQuery} from "../gql/generated/schema";
-import test1 from "../assets/images/test1.jpg"
+import test2 from "../assets/images/test3.jpg"
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 interface Cities {
     cities: ICity[];
@@ -24,7 +25,7 @@ interface IState {
 export default function Home() {
     // gets the paras from URL
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [headerShown, setHeaderShown] = useState(true)
     const {loading: loadingCities, data, refetch} = useCitiesQuery();
 
     const cities = data?.cities ?? [];
@@ -51,17 +52,59 @@ export default function Home() {
         });
     };
 
+    function toggleMenu() {
+        const container = document.getElementById('container'),
+            trigger = container?.querySelector('button.trigger');
+
+        container?.classList.toggle('container--open')
+        trigger?.classList.toggle('trigger--active')
+        setHeaderShown(!headerShown)
+        }
+        //
+        // useEffect(()=>{
+        //     function noscroll() {
+        //         if(headerShown){
+        //             window.scrollTo(0, 0);
+        //             // reset scrolling position
+        //             document.body.scrollTop = document.documentElement.scrollTop = 0;
+        //             // disable scrolling
+        //             window.addEventListener('scroll', noscroll);
+        //         }
+        //     }
+        //     noscroll()
+        // },[headerShown])
+
     return (
-        <>
+        <div id="container">
             <header className="intro">
-                <img className="intro__image" src={test1} alt="Iceland glacier"/>
+                <img className="intro__image" src={test2} alt="Iceland glacier"/>
                 <div className="intro__content">
-                    <h1 className="intro__title">Essential Feelings</h1>
+                    <h1 className="intro__title">Mapado</h1>
                     <div className="intro__subtitle">
-                        <div className="codrops-links">
+                        <div className="intro__description">
+                            <p>L'application qui géolocalise les centres d'intérêts à découvrir dans les villes que vous
+                            visitez, pour faciliter votre voyage et ne rien manquer.</p>
+                            <div className="demos">
+                                <a href="/manage-cities">
+                                    Admin
+                                </a>
+                                <a href="/login">
+                                    Connexion
+                                </a>
+                            </div>
+                            <div className="search-input">
+                                <form>
+                                    <input
+                                        value={state.query}
+                                        onChange={handleChange}
+                                        placeholder="Rechercher une ville..."
+                                        type="search"
+                                    ></input>
+                                </form>
+                            </div>
+
                         </div>
-                        <div className="intro__description"></div>
-                        <button className="trigger">
+                        <button className="trigger" onClick={toggleMenu}>
                             <svg width="100%" height="100%" viewBox="0 0 60 60" preserveAspectRatio="none">
                                 <g className="icon icon--grid">
                                     <rect x="32.5" y="5.5" width="22" height="22"/>
@@ -83,7 +126,7 @@ export default function Home() {
                 {state.query === ""
                     // if there is no search, display all cities
                     ? cities.map((city) => (
-                        <NavLink key={city.id} to={`/info/${city.name}`}>
+                        <NavLink className='cardLink' key={city.id} to={`/info/${city.name}`}>
                             < AnimatedCard key={city.id} cityName={city.name} cityPhoto={city.photo}/>
                         </NavLink>)
                     )
@@ -95,7 +138,7 @@ export default function Home() {
                         </NavLink>))
                 }
             </section>
-        </>
+        </div>
         // <>
         //     <form>
         //         <input
