@@ -6,7 +6,7 @@ import {
 } from "typeorm";
 import { Field, InputType, ObjectType } from "type-graphql";
 import City from "./City";
-import { IsEmail, Matches, MinLength } from "class-validator";
+import { Matches, MinLength } from "class-validator";
 import { argon2id, hash, verify } from "argon2";
 
 export type Role = "visitor" | "cityAdmin" | "superAdmin";
