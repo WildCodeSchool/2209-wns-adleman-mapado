@@ -4,4 +4,5 @@ module.exports = {
     testEnvironment: "node",
     testTimeout: 15 * 1_000,
     setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+    testMatch: [ '**/*.test.tsx' ]
 };

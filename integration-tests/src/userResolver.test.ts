@@ -3,9 +3,7 @@ import User from "../../server/src/entity/User";
 import client from "./apolloClient";
 import db from "../../server/src/db";
 
-
 /*
-
     mutation CreateUser($data: UserInput!) {
   createUser(data: $data) {
 id
@@ -14,11 +12,11 @@ id
 }*/
 
 const createUserMutation = gql`
-  mutation CreateUser($data: UserInput!) {
-      createUser(data: $data) {
-          email
-      }
-  }
+    mutation CreateUser($data: UserInput!) {
+        createUser(data: $data) {
+            email
+        }
+    }
 `;
 
 /*query Users {
@@ -28,11 +26,11 @@ const createUserMutation = gql`
 }*/
 
 const getUsersQuery = gql`
-  query Users {
-    users {
-      id
+    query Users {
+        users {
+            id
+        }
     }
-  }
 `;
 
 /* if error =>
