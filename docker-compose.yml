@@ -3,8 +3,9 @@ services:
     image: postgres:15-alpine
     environment:
       - POSTGRES_PASSWORD=postgres
+      - CHOKIDAR_USEPOLLING=true
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d postgres -U postgres" ]
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -14,17 +15,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      DB_HOST: db
     build: './server'
     ports:
-      - 5001:5001
       - 4000:4000
     volumes:
       - ./server/src:/app/src
-    environment:
-      DB_HOST: db
   client:
     build: './client'
     ports:
       - 3000:3000
     volumes:
       - ./client/src:/app/src
+    environment:
+      - REACT_APP_GRAPHQL_API_URL=http://localhost:4000

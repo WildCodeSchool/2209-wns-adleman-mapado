@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useFetchCityNameMutation } from "../gql/generated/schema";
 import Card from "../components/Card";
+import { useQuery } from "react-apollo";
+import { gql } from '@apollo/client';
+import { useCitiesQuery } from "../gql/generated/schema";
+
 
 interface City {
   id: number;
@@ -16,11 +20,17 @@ interface Cities {
   cities: City[];
 }
 
+
+
 export default function AddManageCities({ cities }: Cities) {
   // Initialisation de l'objet cityRequested
   const [cityRequested, setCityRequested] = useState({
     cityName: "",
   });
+  
+
+  const {refetch} = useCitiesQuery()
+  
 
   // fonction gql qui récupère la valeur de l'input
   const [sendCityName] = useFetchCityNameMutation();
@@ -29,8 +39,22 @@ export default function AddManageCities({ cities }: Cities) {
   const onClickSendCityName = () => {
     console.log(cityRequested);
     console.log(typeof cityRequested);
-    sendCityName({ variables: { data: cityRequested } });
-  };
+    sendCityName({ variables: { data: cityRequested } })
+      .then((res) => {
+      refetch();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    };
+
+
+
+    const onClickDeleteCity = () => { 
+      console.log('yalalalalala')
+    }
+    
 
   return (
     <Card customClass={"registerCard"}>
@@ -52,9 +76,10 @@ export default function AddManageCities({ cities }: Cities) {
         <h2 className={"title"}>Gérer les villes</h2>
         {cities.map((city: City) => {
           return (
-            <div className={"manageOneCityContainer"}>
+            <div className={"manageOneCityContainer"} key={city.id}>
               <p className={"cityLabel"}>{city.name}</p>
-              <button className={"primaryButton"}>Supprimer</button>
+              <button className={"primaryButton"}
+              onClick={onClickDeleteCity}>Supprimer</button>
             </div>
           );
         })}
@@ -62,3 +87,5 @@ export default function AddManageCities({ cities }: Cities) {
     </Card>
   );
 }
+
+

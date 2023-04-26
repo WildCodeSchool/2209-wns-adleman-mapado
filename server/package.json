@@ -22,6 +22,7 @@
     "apollo-server-errors": "^3.3.1",
     "apollo-server-express": "^3.11.1",
     "argon2": "^0.30.2",
+    "chokidar": "^3.5.3",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -33,7 +34,7 @@
     "reflect-metadata": "^0.1.13",
     "ts-dotenv": "^0.9.0",
     "type-graphql": "^1.1.1",
-    "typeorm": "^0.3.9"
+    "typeorm": "^0.3.12"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

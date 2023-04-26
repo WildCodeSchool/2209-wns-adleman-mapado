@@ -2,8 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
-  ManyToOne,
   ManyToMany,
 } from "typeorm";
 import { Field, InputType, ObjectType } from "type-graphql";

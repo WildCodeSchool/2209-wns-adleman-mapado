@@ -62,7 +62,7 @@ export class CityResolver {
       headers: { "x-api-key": env.REACT_APP_CITIES_API_KEY },
     };
 
-    let urlCityAPI = "https://api.api-ninjas.com/v1/geocoding?city=" + cityName;
+    let urlCityAPI = "https://api.api-ninjas.com/v1/geocoding?country=FR&city=" + cityName;
 
     const fetchCity = await fetch(urlCityAPI, optionsCityAPI)
       .then((res) => res.json()) // parse response as JSON

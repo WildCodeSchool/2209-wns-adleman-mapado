@@ -3,11 +3,13 @@ import {NavLink, useSearchParams} from "react-router-dom";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AnimatedCard from "../components/AnimatedCard";
 import ICity from "../interfaces/ICity";
-import { filterBySearch } from "../utils/helpers";
+
 
 interface Cities {
   cities: ICity[];
 }
+
+
 
 interface IState {
     query: string;
@@ -34,10 +36,9 @@ export default function Home({ cities }: Cities) {
     //searchParams controls the URL (what comes after the "?")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const results = cities.filter((city) => {
-            if (e.target.value === " ") return cities;
-            return city.name.toLowerCase().includes(e.target.value.toLowerCase());
+            if (e.target.value.trim() === "") return cities;
+            return city.name.trim().toLowerCase().includes(e.target.value.trim().toLowerCase());
         });
-        console.log(results)
         setSearchParams({query: e.target.value});
         setState({
             query: e.target.value,

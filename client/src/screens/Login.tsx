@@ -20,7 +20,7 @@ export default function Login() {
     const togglePassword = () => setPasswordShown(!passwordShown);
 
     const navigateCreateAccount = () => navigate("/register")
-
+    
     return (
         <>
             <Link to="/">

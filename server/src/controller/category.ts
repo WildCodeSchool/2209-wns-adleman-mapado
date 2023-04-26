@@ -36,8 +36,8 @@ const categoryController: IController = {
         try {
             const created = await datasource.getRepository(Category).save({ name });
             res.status(201).send(created);
-        } catch {(err)
-        res.status(err).send('error while creating category');
+        } catch (err) {
+        res.status(500).send('error while creating category');
         }
     },
 }
