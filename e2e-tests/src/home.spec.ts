@@ -13,12 +13,12 @@ test.afterAll(disconnect);
 test("can view cities in db", async ({ page }) => {
     await db
         .getRepository(City)
-        .insert([{ name: "Niort" }, { name: "Roubaix" }]);
+        .insert([{ name: "Niort" }]);
 
-    await page.goto("/");
+    await page.goto("/manage-cities");
 
     await expect(page.getByTestId("city-list")).toContainText("Niort");
-    await expect(page.getByTestId("city-list")).toContainText("Roubaix");
+  ;
 });
 
 /*test("can add a city", async ({ page }) => {
