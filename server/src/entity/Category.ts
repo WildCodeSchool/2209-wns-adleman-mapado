@@ -10,8 +10,8 @@ class Category {
     @Column()
     name: string;
 
-    @OneToMany(() => Poi, (p) => p.category)
-    poi: Poi;
+    // @OneToMany(() => Poi, (p) => p.category)
+    // poi: Poi;
 }
 
 export default Category;

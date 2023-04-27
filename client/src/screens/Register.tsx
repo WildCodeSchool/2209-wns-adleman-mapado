@@ -43,6 +43,7 @@ export default function Register() {
           <label htmlFor="password">
             <input
               type={passwordShown ? "text" : "password"}
+              id="password"
               placeholder="Mot de passe"
               value={userInfo.password}
               onChange={(e) =>
@@ -57,4 +58,5 @@ export default function Register() {
       </Card>
     </>
   );
+
 }

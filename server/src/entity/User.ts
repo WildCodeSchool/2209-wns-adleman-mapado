@@ -1,82 +1,112 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-} from "typeorm";
-import { Field, InputType, ObjectType } from "type-graphql";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from "typeorm";
+import {Field, InputType, ObjectType} from "type-graphql";
 import City from "./City";
 import { IsEmail, Matches, MinLength } from "class-validator";
 import { argon2id, hash, verify } from "argon2";
 
 export type Role = "visitor" | "cityAdmin" | "superAdmin";
 
-@Entity()
-@ObjectType()
-class User {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: number;
+@InputType()
+export class UserInput {
+    @Field()
+    @IsEmail()
+    email: string;
 
-  @Field({ nullable: true })
-  @Column({nullable: true, type: "date"})
-  created_at: number;
+    @Field()
+    @MinLength(8)
+    @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+    password: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "int" })
-  role_id?: number;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
-  email?: string;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
-  hashedPassword?: string;
-
-  @Field({ nullable: true })
-  @Column({ enum: ["visitor", "cityAdmin"], default: "visitor" })
-  role?: Role;
-
-  @ManyToMany(() => City, (c) => c.id)
-  cities?: City[];
-
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
-  changePasswordToken: string
+    @Field(() => [CityId], {nullable: true})
+    cities?: CityId[];
 }
 
 @InputType()
-export class UserInput {
-  @Field()
-  email: string;
+export class CityId {
+    @Field()
+    id: number;
+}
 
-  @Field()
-  @MinLength(8)
-  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
-  password: string;
+@ObjectType()
+@InputType()
+export class UpdateUserInput {
+    @Field({ nullable: true })
+    @IsEmail()
+    email?: string;
+
+    @Field({ nullable: true })
+    @MinLength(8)
+    @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+    hashedPassword?: string;
+
+    @Field(() => [CityId], {nullable: true})
+    cities?: CityId[]
+
+    // @Field(() => [Role], {nullable: true})
+    // role?: Role[];
+}
+
+@Entity()
+@ObjectType()
+class User {
+    @Field()
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "date" })
+    created_at: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    role_id?: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    email?: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    hashedPassword?: string;
+
+    @Field({nullable: true})
+    @Column({nullable: true, type: "text"})
+    role?: Role;
+
+    @Field(()=>[City], {defaultValue: []})
+    @ManyToMany(() => City, (c) => c.users, {cascade: true,})
+    @JoinTable()
+    cities: City[];
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    changePasswordToken: string;
 }
 
 @InputType()
 export class UserSendPassword {
-  @Field()
-  email: string;
+    @Field()
+    email: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true})
-  token?: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    token?: string;
 }
 
 @InputType()
 export class UserChangePassword {
+    @Field()
+    id: number;
 
-  @Field()
-  @IsEmail()
-  email: string;
+    @Field()
+    @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
+    newPassword: string;
+}
 
-  @Field()
-  @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
-  newPassword: string;
+@InputType()
+export class UserChangePasswordId {
+    @Field()
+    id: number;
 }
 
 const hashingOptions = {
@@ -99,9 +129,9 @@ export const getSafeAttributes = (user: User) => ({
   hashedPassword: undefined,
 });
 
-export const sendPasswordEmail = async (email: string, token?: string): Promise<UserSendPassword> => (
- { email, token }
-)
-
+export const sendPasswordEmail = async (
+  email: string,
+  token?: string
+): Promise<UserSendPassword> => ({ email, token });
 
 export default User;

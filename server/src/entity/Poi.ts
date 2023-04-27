@@ -1,17 +1,44 @@
-import {PrimaryGeneratedColumn, Column, ManyToOne, Entity} from "typeorm";
-import {Field, InputType, ObjectType} from "type-graphql";
+import {PrimaryGeneratedColumn, Column, ManyToOne, Entity, JoinTable} from "typeorm";
+import {Field, Float, InputType, ObjectType} from "type-graphql";
 import City from "./City";
 
 @InputType()
-export class PoiInput{
+export class PoiInput {
     @Field()
     name: string;
 
-    @Field({ nullable: true })
+    @Field({nullable: true})
     description?: string;
 
-    @Field({ nullable: true })
-    rating?: string;
+    @Field()
+    address: string;
+
+    @Field({nullable: true})
+    latitude?: number;
+
+    @Field({nullable: true})
+    longitude?: number;
+
+    @Field({nullable: true})
+    rating?: number;
+
+    @Field()
+    cityId: number
+}
+
+@InputType()
+export class UpdatePoiInput {
+    @Field({nullable: true})
+    name?: string;
+
+    @Field({nullable: true})
+    description?: string;
+
+    @Field({nullable: true})
+    address?: string;
+
+    @Field({nullable: true})
+    rating?: number;
 }
 
 @Entity()
@@ -22,23 +49,27 @@ class Poi {
     id: number;
 
     @Field()
-    @Column({ length: 25 })
+    @Column({length: 25})
     name: string;
 
-    @Field({nullable: true})
-    @Column({nullable: true, type: "int"})
-    gps_coordinates?: number;
+    @Field(() => Float, {nullable: true})
+    @Column({nullable: true, type: "decimal"})
+    latitude?: number;
+
+    @Field(() => Float, {nullable: true})
+    @Column({nullable: true, type: "decimal"})
+    longitude?: number;
 
     @Field({nullable: true})
     @Column({nullable: true, type: "text"})
     customize_gps_marker?: string;
 
     @Field()
-    @Column({ length: 100 })
+    @Column({length: 100})
     address: string;
 
     @Field({nullable: true})
-    @Column({ length: 500 })
+    @Column({nullable: true, length: 500})
     description?: string;
 
     @Field({nullable: true})
@@ -80,8 +111,15 @@ class Poi {
     // @OneToMany(() => Category, (c) => c.poi)
     // category: Category;
 
-    @ManyToOne(() => City, (c) => c.id)
-    cities?: City;
+    @Field(() => City, {nullable: true})
+    // cascade: true permet de lier les POI à la ville concernée
+    // onDelete: "CASCADE" permet de supprimer une ville avec tous les POIs qu'elle possède, sinon ça ne fonctionne pas.
+    @ManyToOne(() => City, (c) => c.poi, {cascade: true, onDelete: "CASCADE"})
+    @JoinTable()
+    city: City
+
+    @Column()
+    cityId: number
 }
 
 export default Poi;

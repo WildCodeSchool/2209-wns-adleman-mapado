@@ -39,6 +39,7 @@ export default function Login() {
                                     client.resetStore();
                                 })
                                 .catch((error) => {
+                                    console.log(error);
                                     toast.error("Invalid credentials", {
                                         style: {
                                             border: "3px solid #EC5D5C",
@@ -69,6 +70,7 @@ export default function Login() {
                         {/*  */}
                         <label htmlFor="password">
                             <input
+                                id="password"
                                 type={passwordShown ? "text" : "password"}
                                 placeholder="Mot de passe"
                                 value={credentials.password}

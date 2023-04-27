@@ -24,9 +24,9 @@ const passwordResetContainerStyles: CSS.Properties = {
   width: "70vw",
   display: "flex",
   flexDirection: "column",
-    backgroundColor: "#173472",
+  backgroundColor: "#173472",
 
-    justifyContent: "space-around",
+  justifyContent: "space-around",
   alignItems: "center",
   border: "2px solid #E2FE53",
 };
@@ -56,29 +56,40 @@ const secondaryButtonStyles: CSS.Properties = {
 };
 
 export default function PasswordReset() {
-  const { token } = useParams();
+
+  const [serverToken, setServerToken] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => setShowPassword(!showPassword);
+
+  const { token, id } = useParams();
+
+  //create clean string form of id
+  const cleanId = id?.replace(/[:]+/g, "") ?? "0";
 
   const [credentials, setCredentials] = useState({
-    email: "",
+    id: id ?? "",
     newPassword: "",
   });
 
-  const [serverToken, setServerToken] = useState({});
-
-  // mutation to get the changeEmailToken
+  // mutation to get the changeEmailToken from the server
   useFetchTokenQuery({
-    // how to replace hard coded email ?
-    variables: { email: "ap_levy@hotmail.com" },
+    // + turns string into number
+    variables: { fetchTokenId: +cleanId },
     onCompleted: (response) => {
+      //response back to client from server is the token saved in the database
       setServerToken(JSON.stringify(response.fetchToken.changePasswordToken));
     },
   });
 
+  //Mutation to replace old password with new password in database
   const [changePassword] = useChangePasswordMutation();
 
-  // if params === serverEmailToken then display the page else display an error message / page
-  const cleanServerToken = JSON.stringify(serverToken).replace(/[\\]/g, "").replace(/['"]+/g, '');
-  const cleanToken = token?.replace(/[:]+/g, '')
+  // if params token === serverEmailToken then display the page else display an error message / page
+  // same as clean id, we need to stringify and clean up serverToken response and params token
+  const cleanServerToken = JSON.stringify(serverToken)
+    .replace(/[\\]/g, "")
+    .replace(/['"]+/g, "");
+  const cleanToken = token?.replace(/[:]+/g, "");
 
   if (!token || cleanToken !== cleanServerToken)
     return (
@@ -95,37 +106,25 @@ export default function PasswordReset() {
           style={passwordResetContainerStyles}
           onSubmit={(e) => {
             e.preventDefault();
-            changePassword({ variables: { data: credentials } })
+            changePassword({ variables: { newPassword: credentials.newPassword, changePasswordId: +credentials.id } })
               .then(() => {
-                console.log(credentials.email, credentials.newPassword);
+                console.log("success");
               })
               .catch(console.error);
           }}
         >
-          <label htmlFor="email">
-            <input
-              style={inputStyles}
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={credentials.email}
-              onChange={(e) =>
-                setCredentials({ ...credentials, email: e.target.value })
-              }
-            ></input>
-          </label>
           <label htmlFor="newPassword">
             <input
               style={inputStyles}
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="newPassword"
               placeholder="Nouveau mot de passe"
               value={credentials.newPassword}
               onChange={(e) =>
-                setCredentials({ ...credentials, newPassword: e.target.value })
+                setCredentials({ id: cleanId ?? "", newPassword: e.target.value })
               }
             ></input>
+            <button type="button" onClick={togglePassword}>{showPassword ? "Hide password" : "Show password"}</button>
           </label>
           <div>
             <button style={secondaryButtonStyles}>Retour</button>

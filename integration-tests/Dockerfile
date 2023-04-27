@@ -8,9 +8,6 @@ RUN mkdir /server
 WORKDIR /server
 
 COPY ./server/package.json ./package.json
-COPY ./server/npm-lock.yaml ./npm-lock.yaml
-
-RUN npm i -g npm
 RUN npm i
 
 COPY ./server/src ./src
@@ -23,7 +20,7 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY integration-tests/package*.json ./
-RUN npm i 
+RUN npm i
 COPY integration-tests/jest.config.js ./
 COPY integration-tests/setupTests.ts ./
 

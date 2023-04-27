@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "target": "es2018",
     "module": "commonjs",
     "lib": ["es2018", "esnext.asynciterable"],
@@ -21,7 +21,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "baseUrl": "."
-    },
-    "exclude": ["node_modules"],
-    "include": ["./**/*.ts"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["./**/*.ts"]
 }

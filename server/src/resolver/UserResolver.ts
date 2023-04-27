@@ -11,6 +11,7 @@ import {
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import datasource from "../db";
+import {In} from "typeorm";
 import User, {
   getSafeAttributes,
   hashPassword,
@@ -19,17 +20,20 @@ import User, {
   UserInput,
   UserSendPassword,
   verifyPassword,
+  UpdateUserInput
 } from "../entity/User";
 import { env } from "../environment";
 import { ContextType } from "../index";
 import { stringify } from "querystring";
+import City from "../entity/City";
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => [User])
-  async users(): Promise<User[]> {
-    return await datasource.getRepository(User).find();
-  }
+    @Query(() => [User])
+    async users(): Promise<User[]> {
+        //Pour récupérer la liste des cities on ajoute la relation
+        return await datasource.getRepository(User).find({relations: {cities: true}});
+    }
 
   @Mutation(() => User)
   async createUser(@Arg("data") data: UserInput): Promise<User> {
@@ -49,6 +53,31 @@ export class UserResolver {
     return true;
   }
 
+    @Mutation(() => String)
+    async updateUser(
+        @Arg("id", () => Int) id: number,
+        @Arg("data", () => UpdateUserInput) {email, hashedPassword, cities}: UpdateUserInput): Promise<String>
+    {
+        let citiesEntities: City[] = []
+        let user = await datasource.getRepository(User).findOne({where: {id}, relations: {cities: true}})
+        if (!user) throw new ApolloError("User not found", "NOT_FOUND")
+
+        if (cities) {
+            citiesEntities = await datasource.getRepository(City).find({where: {id: In(cities?.map(c => c.id))}})
+            user.cities = [...(user?.cities ? user.cities : []), ...citiesEntities]
+        }
+        if (hashedPassword) user.hashedPassword = await hashPassword(user.hashedPassword ? user.hashedPassword : '');
+
+        if (email) user.email = email
+
+        const updatedUser = await datasource
+            .getRepository(User)
+            .save(user);
+
+        return "data updated";
+
+    }
+
   @Mutation(() => String)
   async login(
     @Arg("data") { email, password }: UserInput,
@@ -57,7 +86,7 @@ export class UserResolver {
     const user = await datasource
       .getRepository(User)
       .findOne({ where: { email } });
-    // const hashedPassword = await hashPassword(password);
+    ///const hashedPassword = await hashPassword(password);
 
     if (
       user === null ||
@@ -110,7 +139,6 @@ export class UserResolver {
       from: "mapado-wns@outlook.com",
     });
 
-    // const createEmailToken = (): string => {
     const userId = userToEmail.id;
     const hashedPassword = userToEmail.hashedPassword;
     const createdAt = userToEmail.created_at;
@@ -120,7 +148,7 @@ export class UserResolver {
 
     try {
       // create token
-      const url = `http://localhost:3000/password/reset/:${emailToken}`;
+      const url = `http://localhost:3000/password/reset/:${userId}/:${emailToken}`;
 
       //  send password reset email
       await transporter.sendMail({
@@ -146,10 +174,10 @@ export class UserResolver {
   // // Query to fetch and send changeEmailToken to client
 
   @Query(() => User)
-  async fetchToken(@Arg("email", () => String) email: string): Promise<User> {
+  async fetchToken(@Arg("id", () => Number) id: number): Promise<User> {
     const userToUpdatePassword = await datasource
       .getRepository(User)
-      .findOne({ where: { email } });
+      .findOne({ where: { id } });
     if (userToUpdatePassword === null)
       throw new ApolloError("user not found", "NOT_FOUND");
     return userToUpdatePassword;
@@ -158,16 +186,14 @@ export class UserResolver {
   // mutation to change password
   @Mutation(() => User)
   async changePassword(
-    // @Arg('id', () => Int) id: number,
-    @Arg("data") data: UserChangePassword
+    @Arg('id', () => Int) id: number,
+    @Arg('newPassword', () => String) newPassword: string
   ): Promise<boolean> {
-    // deconstruct data from User entity
-    const { email, newPassword } = data;
 
     //create userToUpdate which is the user in the db matching the email (with properties email, hashedPassword, etc)
     const userToUpdate = await datasource
       .getRepository(User)
-      .findOne({ where: { email } });
+      .findOne({ where: { id } });
     // verify if user is null > throw error
     if (!userToUpdate)
       throw new ApolloError("invalid credentials no such user");

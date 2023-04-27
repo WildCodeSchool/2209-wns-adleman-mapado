@@ -35,7 +35,24 @@ async function seed(): Promise<void> {
             longitude: 4.8320114
         },
     ]);
-    
+    await db.getRepository(User).insert([
+        {
+            email: "gg@test.com",
+            id: 7,
+            hashedPassword: "$argon2id$v=19$m=65536,t=5,p=4$to+4ziOVZQe7ypnIs36mjg$3F6fWRb6FWRbd/U0XAEaleJnF+N86Dx1lp7Kk8sNEWk"
+        },
+        {
+            email: "leila@test.com",
+            id: 8,
+            hashedPassword: "$argon2id$v=19$m=65536,t=5,p=4$QjDIabFnM6IG+VHQvFWlAA$vBQMp015pFAoiFm+UQXPh59dp1GSs4ZwjgfnWjT6ERw"
+        },
+        {
+            email: "mymy@test.com",
+            id: 9,
+            hashedPassword: "$argon2id$v=19$m=65536,t=5,p=4$LaxMx6z8fF13b+F7kFDnPA$fNDp0reGwhY8dOe0xmoLHlII5qzURpE+Ynsg266hBx4"
+        }
+])
+
     await db.destroy();
     console.log("done !");
 }

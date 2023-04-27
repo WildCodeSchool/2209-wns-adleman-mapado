@@ -26,6 +26,10 @@ export type City = {
   users?: Maybe<Array<User>>;
 };
 
+export type CityId = {
+  id: Scalars['Float'];
+};
+
 export type CityInput = {
   latitude?: InputMaybe<Scalars['Float']>;
   longitude?: InputMaybe<Scalars['Float']>;
@@ -41,24 +45,34 @@ export type Mutation = {
   __typename?: 'Mutation';
   changePassword: User;
   createCity: City;
+  createPoi: Poi;
   createUser: User;
   deleteCity: Scalars['Boolean'];
+  deletePoi: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
   fetchCityName: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
   sendPasswordEmail: User;
   updateCity: City;
+  updatePoi: Scalars['String'];
+  updateUser: Scalars['String'];
 };
 
 
 export type MutationChangePasswordArgs = {
-  data: UserChangePassword;
+  id: Scalars['Int'];
+  newPassword: Scalars['String'];
 };
 
 
 export type MutationCreateCityArgs = {
   data: CityInput;
+};
+
+
+export type MutationCreatePoiArgs = {
+  data: PoiInput;
 };
 
 
@@ -68,6 +82,11 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteCityArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationDeletePoiArgs = {
   id: Scalars['Int'];
 };
 
@@ -97,16 +116,30 @@ export type MutationUpdateCityArgs = {
   id: Scalars['Int'];
 };
 
+
+export type MutationUpdatePoiArgs = {
+  data: UpdatePoiInput;
+  id: Scalars['Int'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+  id: Scalars['Int'];
+};
+
 export type Poi = {
   __typename?: 'Poi';
   address: Scalars['String'];
   audio?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['Float']>;
+  city?: Maybe<City>;
   comments?: Maybe<Scalars['String']>;
   customize_gps_marker?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  gps_coordinates?: Maybe<Scalars['Float']>;
   id: Scalars['Float'];
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
   phone?: Maybe<Scalars['Float']>;
   photo?: Maybe<Scalars['String']>;
@@ -114,8 +147,19 @@ export type Poi = {
   website?: Maybe<Scalars['String']>;
 };
 
+export type PoiInput = {
+  address: Scalars['String'];
+  cityId: Scalars['Float'];
+  description?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+  name: Scalars['String'];
+  rating?: InputMaybe<Scalars['Float']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  Pois: Array<Poi>;
   cities: Array<City>;
   city: City;
   fetchToken: User;
@@ -130,12 +174,26 @@ export type QueryCityArgs = {
 
 
 export type QueryFetchTokenArgs = {
-  email: Scalars['String'];
+  id: Scalars['Float'];
+};
+
+export type UpdatePoiInput = {
+  address?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Float']>;
+};
+
+export type UpdateUserInput = {
+  cities?: InputMaybe<Array<CityId>>;
+  email?: InputMaybe<Scalars['String']>;
+  hashedPassword?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
   changePasswordToken?: Maybe<Scalars['String']>;
+  cities?: Maybe<Array<City>>;
   created_at?: Maybe<Scalars['Float']>;
   email?: Maybe<Scalars['String']>;
   hashedPassword?: Maybe<Scalars['String']>;
@@ -144,12 +202,8 @@ export type User = {
   role_id?: Maybe<Scalars['Float']>;
 };
 
-export type UserChangePassword = {
-  email: Scalars['String'];
-  newPassword: Scalars['String'];
-};
-
 export type UserInput = {
+  cities?: InputMaybe<Array<CityId>>;
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -160,11 +214,19 @@ export type UserSendPassword = {
 };
 
 export type ChangePasswordMutationVariables = Exact<{
-  data: UserChangePassword;
+  newPassword: Scalars['String'];
+  changePasswordId: Scalars['Int'];
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'User', email?: string | null } };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'User', hashedPassword?: string | null } };
+
+export type CreatePoiMutationVariables = Exact<{
+  data: PoiInput;
+}>;
+
+
+export type CreatePoiMutation = { __typename?: 'Mutation', createPoi: { __typename?: 'Poi', id: number, name: string, address: string } };
 
 export type CreateUserMutationVariables = Exact<{
   data: UserInput;
@@ -172,6 +234,13 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: number } };
+
+export type DeleteCityMutationVariables = Exact<{
+  deleteCityId: Scalars['Int'];
+}>;
+
+
+export type DeleteCityMutation = { __typename?: 'Mutation', deleteCity: boolean };
 
 export type FetchCityNameMutationVariables = Exact<{
   data: CityRequested;
@@ -190,10 +259,10 @@ export type GetCityQueryVariables = Exact<{
 }>;
 
 
-export type GetCityQuery = { __typename?: 'Query', city: { __typename?: 'City', name: string, latitude?: number | null, longitude?: number | null } };
+export type GetCityQuery = { __typename?: 'Query', city: { __typename?: 'City', name: string, latitude?: number | null, longitude?: number | null, poi?: Array<{ __typename?: 'Poi', id: number, name: string, address: string, latitude?: number | null, longitude?: number | null }> | null } };
 
 export type FetchTokenQueryVariables = Exact<{
-  email: Scalars['String'];
+  fetchTokenId: Scalars['Float'];
 }>;
 
 
@@ -230,9 +299,9 @@ export type SendPasswordEmailMutation = { __typename?: 'Mutation', sendPasswordE
 
 
 export const ChangePasswordDocument = gql`
-    mutation ChangePassword($data: UserChangePassword!) {
-  changePassword(data: $data) {
-    email
+    mutation changePassword($newPassword: String!, $changePasswordId: Int!) {
+  changePassword(newPassword: $newPassword, id: $changePasswordId) {
+    hashedPassword
   }
 }
     `;
@@ -251,7 +320,8 @@ export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMut
  * @example
  * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
  *   variables: {
- *      data: // value for 'data'
+ *      newPassword: // value for 'newPassword'
+ *      changePasswordId: // value for 'changePasswordId'
  *   },
  * });
  */
@@ -262,6 +332,41 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const CreatePoiDocument = gql`
+    mutation CreatePoi($data: PoiInput!) {
+  createPoi(data: $data) {
+    id
+    name
+    address
+  }
+}
+    `;
+export type CreatePoiMutationFn = Apollo.MutationFunction<CreatePoiMutation, CreatePoiMutationVariables>;
+
+/**
+ * __useCreatePoiMutation__
+ *
+ * To run a mutation, you first call `useCreatePoiMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePoiMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPoiMutation, { data, loading, error }] = useCreatePoiMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreatePoiMutation(baseOptions?: Apollo.MutationHookOptions<CreatePoiMutation, CreatePoiMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePoiMutation, CreatePoiMutationVariables>(CreatePoiDocument, options);
+      }
+export type CreatePoiMutationHookResult = ReturnType<typeof useCreatePoiMutation>;
+export type CreatePoiMutationResult = Apollo.MutationResult<CreatePoiMutation>;
+export type CreatePoiMutationOptions = Apollo.BaseMutationOptions<CreatePoiMutation, CreatePoiMutationVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($data: UserInput!) {
   createUser(data: $data) {
@@ -295,6 +400,37 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const DeleteCityDocument = gql`
+    mutation DeleteCity($deleteCityId: Int!) {
+  deleteCity(id: $deleteCityId)
+}
+    `;
+export type DeleteCityMutationFn = Apollo.MutationFunction<DeleteCityMutation, DeleteCityMutationVariables>;
+
+/**
+ * __useDeleteCityMutation__
+ *
+ * To run a mutation, you first call `useDeleteCityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCityMutation, { data, loading, error }] = useDeleteCityMutation({
+ *   variables: {
+ *      deleteCityId: // value for 'deleteCityId'
+ *   },
+ * });
+ */
+export function useDeleteCityMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCityMutation, DeleteCityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCityMutation, DeleteCityMutationVariables>(DeleteCityDocument, options);
+      }
+export type DeleteCityMutationHookResult = ReturnType<typeof useDeleteCityMutation>;
+export type DeleteCityMutationResult = Apollo.MutationResult<DeleteCityMutation>;
+export type DeleteCityMutationOptions = Apollo.BaseMutationOptions<DeleteCityMutation, DeleteCityMutationVariables>;
 export const FetchCityNameDocument = gql`
     mutation FetchCityName($data: CityRequested!) {
   fetchCityName(data: $data)
@@ -370,6 +506,13 @@ export const GetCityDocument = gql`
     name
     latitude
     longitude
+    poi {
+      id
+      name
+      address
+      latitude
+      longitude
+    }
   }
 }
     `;
@@ -402,8 +545,8 @@ export type GetCityQueryHookResult = ReturnType<typeof useGetCityQuery>;
 export type GetCityLazyQueryHookResult = ReturnType<typeof useGetCityLazyQuery>;
 export type GetCityQueryResult = Apollo.QueryResult<GetCityQuery, GetCityQueryVariables>;
 export const FetchTokenDocument = gql`
-    query FetchToken($email: String!) {
-  fetchToken(email: $email) {
+    query FetchToken($fetchTokenId: Float!) {
+  fetchToken(id: $fetchTokenId) {
     changePasswordToken
   }
 }
@@ -421,7 +564,7 @@ export const FetchTokenDocument = gql`
  * @example
  * const { data, loading, error } = useFetchTokenQuery({
  *   variables: {
- *      email: // value for 'email'
+ *      fetchTokenId: // value for 'fetchTokenId'
  *   },
  * });
  */

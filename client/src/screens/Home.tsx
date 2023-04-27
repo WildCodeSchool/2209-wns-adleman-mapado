@@ -3,10 +3,11 @@ import {NavLink, useSearchParams} from "react-router-dom";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import AnimatedCard from "../components/AnimatedCard";
 import ICity from "../interfaces/ICity";
-
+import {filterBySearch} from "../utils/helpers";
+import {useCitiesQuery} from "../gql/generated/schema";
 
 interface Cities {
-  cities: ICity[];
+    cities: ICity[];
 }
 
 
@@ -21,15 +22,19 @@ interface IState {
 //   password: string
 // }
 
-export default function Home({ cities }: Cities) {
-  // gets the paras from URL
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function Home() {
+    // gets the paras from URL
+    const [searchParams, setSearchParams] = useSearchParams();
 
-  // State to manage both URL query & cities to display
-  const [state, setState] = useState<IState>({
-    query: searchParams.get("query") ?? "",
-    list: [],
-  });
+    const { loading: loadingCities, data, refetch } = useCitiesQuery();
+
+    const cities = data?.cities ?? [];
+console.log(cities)
+    // State to manage both URL query & cities to display
+    const [state, setState] = useState<IState>({
+        query: searchParams.get("query") ?? "",
+        list: [],
+    });
 
     // takes in value from the search bar and returns a filtered list of the cities to display
     //(filter improves with each letter)
