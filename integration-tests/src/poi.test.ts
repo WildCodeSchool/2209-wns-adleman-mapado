@@ -1,16 +1,42 @@
-describe('POI resolver', () => {
-    describe('createPOI', () => {
-        it('should create a POI', async () => {});
-        it('should not create a POI if invalid attributes and return an error', async () => {});
+
+import gql from 'graphql-tag';
+import client from './apolloClients';
+
+
+
+
+
+
+const createPoiMutation = gql`
+    mutation createPoi($data: PoiInput!) {
+        createPoi(data: $data) {
+            email
+        }
+    }
+`;
+
+describe ('Point of interest resolver', () => {
+    describe("Point of interest created", () => {
+        it('should create a point of interest given valid attributes', async () => {
+            const res = await client.mutate({
+                mutation: createPoiMutation,
+                variables: {data: {email: 'toto@gmail.com', password: 'Abc@123456'}},
+            });
+            expect(res.data?.createPoi).toHaveProperty("email");
+        });
+
+        it('should not create a point of interest given invalid attributes', async () => {
+            expect (() => client.mutate({
+                mutation: createPoiMutation,
+                variables: {data: {email: '', password: ''}},
+            })
+            ).rejects.toThrowErrorMatchingInlineSnapshot(
+                "Argument Validation Error"
+            );
+        });
     });
-    describe('read POIs', () => {
-        it('should return all POIs', async () => {});
-    });
-    describe('updatePOI', () => {
-        it('should update a POI', async () => {});
-        it('should not update a POI if invalid attributes and return an error', async () => {});
-    });
-    describe('deletePOI', () => {
-        it('should delete a POI', async () => {});
+
+    describe("read Point of interest", () => {
+        it("should return an array", async () => {});
     });
 });

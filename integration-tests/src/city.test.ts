@@ -1,23 +1,42 @@
-describe("City resolver", () => {
-    describe("createCity", () => {
-        it("should create a city", async () => {});
 
-        it("should not create a city if invalid attributes and return an error", async () =>
-        {});
+import gql from 'graphql-tag';
+import client from './apolloClients';
+
+
+
+
+
+
+const createCityMutation = gql`
+    mutation createCity($data: CityInput!) {
+        createCity(data: $data) {
+            email
+        }
+    }
+`;
+
+describe ('City resolver', () => {
+    describe("City created", () => {
+        it('should create a point of interest given valid attributes', async () => {
+            const res = await client.mutate({
+                mutation: createCityMutation,
+                variables: {data: {email: 'toto@gmail.com', password: 'Abc@123456'}},
+            });
+            expect(res.data?.createCity).toHaveProperty("email");
+        });
+
+        it('should not create a point of interest given invalid attributes', async () => {
+            expect (() => client.mutate({
+                mutation: createCityMutation,
+                variables: {data: {email: '', password: ''}},
+            })
+            ).rejects.toThrowErrorMatchingInlineSnapshot(
+                "Argument Validation Error"
+            );
+        });
     });
 
-    describe("read cities", () => {
-    it("should return all cities", async () => {});
-    });
-
-    describe("updateCity", () => {
-        it("should update a city", async () => {});
-
-        it("should not update a city if invalid attributes and return an error", async () =>
-        {});
-    });
-    describe("deleteCity", () => {
-        it("should delete a city", async () => {});
+    describe("read City of interest", () => {
+        it("should return an array", async () => {});
     });
 });
-
