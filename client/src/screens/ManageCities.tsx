@@ -6,7 +6,8 @@ import {
     useCreatePoiMutation
 } from "../gql/generated/schema";
 import Card from "../components/Card";
-
+import { useQuery } from "react-apollo";
+import { gql } from '@apollo/client';
 
 
 
