@@ -51,7 +51,7 @@ export default function AddManageCities() {
         {cities.map((city: City) => {
           return (
             <div key={city.id} className={"manageOneCityContainer"}>
-              <p className={"cityLabel"}>{city.name}</p>
+              <p className={"cityLabel"} data-testid="city-list">{city.name}</p>
               <button className={"primaryButton"}>Supprimer</button>
             </div>
           );

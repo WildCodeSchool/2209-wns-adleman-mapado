@@ -9,7 +9,7 @@ WORKDIR /server
 
 COPY ./server/package.json ./package.json
 
-RUN npm i
+RUN npm i --legacy-peer-deps
 
 COPY ./server/src ./src
 COPY ./server/.env ./.env

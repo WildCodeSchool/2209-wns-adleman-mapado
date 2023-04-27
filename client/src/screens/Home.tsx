@@ -72,7 +72,7 @@ export default function Home() {
                     state.list.map((city) => (
                         // if there is a search display the cities corresponding
                         <NavLink key={city.id} to={`/info/${city.name}`}>
-                            < AnimatedCard key={city.id} cityName={city.name} cityPhoto={city.photo} data-testid="city-list"/>
+                            < AnimatedCard key={city.id} cityName={city.name} cityPhoto={city.photo} />
                         </NavLink>))
                 }
             </div>
