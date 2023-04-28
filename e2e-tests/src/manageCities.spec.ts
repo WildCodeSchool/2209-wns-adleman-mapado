@@ -20,10 +20,3 @@ test("can view cities in db", async ({ page }) => {
     await expect(page.getByTestId("city-list")).toContainText("Niort");
   ;
 });
-
-/*test("can add a city", async ({ page }) => {
-    await page.goto("/manage-cities");
-    await page.getByTestId("newCity").type("Brest");
-    await page.getByRole("button", { name: "Ajouter" }).click();
-    await expect(page.getByTestId("city-list")).toContainText("Brest");
-});*/

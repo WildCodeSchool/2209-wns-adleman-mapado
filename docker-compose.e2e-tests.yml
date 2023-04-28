@@ -42,7 +42,7 @@ services:
     volumes:
       - ./client/src:/app/src
     environment:
-      REACT_APP_GRAPHQL_API_URL: 'http://host.docker.internal:4000/graphql'
+      REACT_APP_GRAPHQL_API_URL: 'http://host.docker.internal:4000'
     healthcheck:
       test: "curl --fail --request GET --url http://host.docker.internal:3000"
       interval: 5s
