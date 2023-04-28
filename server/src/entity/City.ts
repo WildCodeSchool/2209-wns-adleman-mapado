@@ -63,11 +63,11 @@ export default class City {
   longitude?: number;
 
   @Field(() => [User], { nullable: true })
-  @ManyToMany(() => User, (u) => u.cities, { cascade: true })
+  @ManyToMany(() => User, (u) => u.cities, )
   users?: User[];
 
   @Field(() => [Poi], { nullable: true })
-  @OneToMany(() => Poi, (p) => p.cities, { cascade: true })
+  @OneToMany(() => Poi, (p) => p.city )
   poi?: Poi[];
 }
 

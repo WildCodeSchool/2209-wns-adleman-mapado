@@ -3,5 +3,12 @@ query getCity($query: String!) {
     name
     latitude
     longitude
+     poi {
+          id
+          name
+          address
+          latitude
+          longitude
+        }
   }
 }

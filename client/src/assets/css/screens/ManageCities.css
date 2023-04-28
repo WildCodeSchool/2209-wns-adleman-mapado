@@ -40,7 +40,7 @@
 .cityLabel {
     background-color: #EC5D5C;
     color: #FFEBE9;
-    width: 21.5rem;
+    width: 10.5rem;
     height: 3rem;
     margin: 1.5rem;
     border-radius: 5px;
@@ -59,7 +59,7 @@ input {
 
 .primaryButton {
     height: 2.5rem;
-    width: 15rem;
+    width: 6rem;
     background-color: #FFFFFF;
     border-radius: 15px;
     border: 3px solid #173472;

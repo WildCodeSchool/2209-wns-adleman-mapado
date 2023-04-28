@@ -40,8 +40,7 @@ const start = async () => {
   const httpServer = http.createServer(app);
 
   const schema = await buildSchema({
-    // resolvers: [__dirname + "/resolvers/*.{ts,js}"]
-    resolvers: [CityResolver, UserResolver],
+    resolvers: [CityResolver, UserResolver, PoiResolver],
     authChecker: async ({ context }: { context: ContextType }, roles) => {
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
       const tokenInCookie = context.req.cookies?.["token"];
