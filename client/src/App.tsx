@@ -19,6 +19,15 @@ const styles: CSS.Properties = {
 };
 
 function App() {
+
+  const { loading: loadingCities, data } = useCitiesQuery();
+
+  const path = window.location.pathname;
+
+
+  const cities = data?.cities ?? [];
+
+
   return (
     <>
       <Toaster position="top-center" />

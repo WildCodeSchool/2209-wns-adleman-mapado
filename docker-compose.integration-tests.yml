@@ -39,6 +39,7 @@ services:
         condition: service_healthy
     environment:
       DB_HOST: testDB
+      GRAPHQL_API_URL: http://backend:4000
     volumes:
       - ./server/src/entity:/server/src/entity
-      - ./integration-integration-tests/src:/app/src
+      - ./integration-tests/src:/app/src

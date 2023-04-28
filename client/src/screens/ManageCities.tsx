@@ -3,7 +3,8 @@ import {
     useCitiesQuery,
     useFetchCityNameMutation,
     useDeleteCityMutation,
-    useCreateUserMutation, useCreatePoiMutation
+    useCreateUserMutation, 
+    useCreatePoiMutation
 } from "../gql/generated/schema";
 import Card from "../components/Card";
 

@@ -53,21 +53,21 @@ class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "date" })
-    created_at: number;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "date" })
+  created_at: number;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "int" })
-    role_id?: number;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "int" })
+  role_id?: number;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "text" })
-    email?: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
+  email?: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "text" })
-    hashedPassword?: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
+  hashedPassword?: string;
 
     @Field({nullable: true})
     @Column({nullable: true, type: "text"})
@@ -85,12 +85,12 @@ class User {
 
 @InputType()
 export class UserSendPassword {
-    @Field()
-    email: string;
+  @Field()
+  email: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    token?: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true})
+  token?: string;
 }
 
 @InputType()
@@ -105,8 +105,8 @@ export class UserChangePassword {
 
 @InputType()
 export class UserChangePasswordId {
-  @Field()
-  id: number;
+    @Field()
+    id: number;
 }
 
 const hashingOptions = {

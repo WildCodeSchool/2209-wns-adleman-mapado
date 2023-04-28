@@ -19,5 +19,8 @@
     "url": "git+https://github.com/WildCodeSchool/2209-wns-adleman-mapado"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react-hot-toast": "^2.4.0"
+  }
 }

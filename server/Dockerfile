@@ -1,13 +1,9 @@
 FROM node:lts-alpine
-<<<<<<< HEAD
 
 RUN apk --no-cache add curl
 RUN apk add make g++ python3 git
 RUN npm i -g node-pre-gyp
 
-=======
-RUN apk --no-cache add curl
->>>>>>> origin
 RUN mkdir /app
 WORKDIR /app
 
