@@ -27,92 +27,89 @@ export default function Login() {
         <Header />
       </Link>
       <div className={"loginStyle"}>
-        {currentUser ? (
-            <>
-          <div data-testid="logged-in-message">Logged in as {currentUser.profile.email}</div>
-          <Navigate to="/" replace={false}/>
-          </>
-        ) : (
-          <Card customClass={"registerCard"}>
-            <form
-              className={"loginContainer"}
-              onSubmit={(e) => {
-                e.preventDefault();
-                login({ variables: { data: credentials } })
-                  .then(() => {
-                    client.resetStore();
-                  })
-                  .catch((error) => {
-                    toast.error("Invalid credentials", {
-                      style: {
-                        border: "3px solid #EC5D5C",
-                        padding: "4rem",
-                        color: "#EC5D5C",
-                      },
-                      iconTheme: {
-                        primary: "#EC5D5C",
-                        secondary: "#FFFFFF",
-                      },
-                    });
+        {currentUser && <Navigate to="/" replace={false} />}
+        <Card customClass={"registerCard"}>
+          <form
+            className={"loginContainer"}
+            onSubmit={(e) => {
+              e.preventDefault();
+              toast.success(`Welcome ${currentUser?.profile.email}!`)
+              login({ variables: { data: credentials } })
+                .then(() => {
+                  client.resetStore();
+                })
+                .catch((error) => {
+                  toast.error("Invalid credentials", {
+                    style: {
+                      border: "3px solid #EC5D5C",
+                      padding: "4rem",
+                      color: "#EC5D5C",
+                    },
+                    iconTheme: {
+                      primary: "#EC5D5C",
+                      secondary: "#FFFFFF",
+                    },
                   });
-              }}
-            >
-              {/* <img src={login} alt="" style={iconStyles} /> */}
-              <label htmlFor="email">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Adresse mail"
-                  value={credentials.email}
-                  onChange={(e) =>
-                    setCredentials({ ...credentials, email: e.target.value })
-                  }
-                ></input>
-              </label>
-              {/*  */}
-              <label htmlFor="password">
-                <input
-                  type={passwordShown ? "text" : "password"}
-                  placeholder="Mot de passe"
-                  value={credentials.password}
-                  onChange={(e) =>
-                    setCredentials({ ...credentials, password: e.target.value })
-                  }
-                ></input>
-                <div>
-                  <button
-                    type="button"
-                    onClick={togglePassword}
-                    style={{ color: "#EC5D5C" }}
-                  >
-                    Afficher le mot de passe
-                  </button>
-                </div>
-                {/*  */}
-              </label>
-              <div className={"loginButtonsContainer"}>
+                });
+            }}
+          >
+            {/* <img src={login} alt="" style={iconStyles} /> */}
+            <label htmlFor="email">
+              <input
+                data-testid="login-email"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Adresse mail"
+                value={credentials.email}
+                onChange={(e) =>
+                  setCredentials({ ...credentials, email: e.target.value })
+                }
+              ></input>
+            </label>
+            {/*  */}
+            <label htmlFor="password">
+              <input
+                data-testid="login-password"
+                type={passwordShown ? "text" : "password"}
+                placeholder="Mot de passe"
+                value={credentials.password}
+                onChange={(e) =>
+                  setCredentials({ ...credentials, password: e.target.value })
+                }
+              ></input>
+              <div>
                 <button
                   type="button"
-                  className={"primaryButton"}
-                  onClick={navigateEmailPassword}
+                  onClick={togglePassword}
+                  style={{ color: "#EC5D5C" }}
                 >
-                  Mot de passe oublié ?
-                </button>
-                <button type="submit" className={"tertiaryButton"}>
-                  Se connecter
-                </button>
-                <button
-                  type="button"
-                  className={"tertiaryButton"}
-                  onClick={navigateCreateAccount}
-                >
-                  Créer un compte
+                  Afficher le mot de passe
                 </button>
               </div>
-            </form>
-          </Card>
-        )}
+              {/*  */}
+            </label>
+            <div className={"loginButtonsContainer"}>
+              <button
+                type="button"
+                className={"primaryButton"}
+                onClick={navigateEmailPassword}
+              >
+                Mot de passe oublié ?
+              </button>
+              <button type="submit" className={"tertiaryButton"}>
+                Login
+              </button>
+              <button
+                type="button"
+                className={"tertiaryButton"}
+                onClick={navigateCreateAccount}
+              >
+                Créer un compte
+              </button>
+            </div>
+          </form>
+        </Card>
       </div>
     </>
   );

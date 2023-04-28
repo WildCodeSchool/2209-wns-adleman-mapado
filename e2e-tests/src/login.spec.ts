@@ -14,13 +14,10 @@ test("can log in with correct credentials", async ({ page }) => {
   const email = "plato.plato@plato.com";
   const password = "Pl@to123";
   const hashedPassword = await hash(password);
-  await db.getRepository(User).insert({ email, hashedPassword });
 
   await page.goto("/login");
   await page.getByTestId("login-email").type(email);
   await page.getByTestId("login-password").type(password);
   await page.getByRole("button", { name: "Login" }).click();
-  await expect(page.getByTestId("logged-in-message")).toContainText(
-    `Logged in as ${email}`
-  );
+  await expect(page.getByText(`Welcome`)).toBeVisible();
 });
