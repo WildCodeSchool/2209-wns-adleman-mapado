@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import { FlatList, StyleSheet, TextInput, View, Text } from 'react-native';
+import {FlatList, StyleSheet, TextInput, View, Text} from 'react-native';
 import {useCitiesQuery} from "../gql/generated/schema";
 import CityListItem from "../components/CityListItem";
 import React from "react";
@@ -11,7 +11,6 @@ export default function CitiesScreen({navigation}) {
     const {data} = useCitiesQuery();
     const cities = data?.cities || [];
 
-
     return (
         <View style={styles.container}>
             <StatusBar/>
@@ -21,8 +20,8 @@ export default function CitiesScreen({navigation}) {
                 value={text}
                 placeholder={"Recherchez un ville"}>
             </TextInput>
-            <Text>Home Screen</Text>
-    
+            <Text>Home</Text>
+
             <FlatList
                 keyExtractor={(item) => item.id.toString()}
                 data={cities}

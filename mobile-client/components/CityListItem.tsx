@@ -12,8 +12,8 @@ export default function CityListItem({city, navigation}: WilderListItemProps) {
     return (
         <View style={styles.listItem}>
             <View>
-                {city.image ? (
-                    <Image source={{uri: city.image}} style={{width: 200, height: 200}}
+                {city.photo ? (
+                    <Image source={{uri: city.photo}} style={{width: 200, height: 200}}
                     />
                 ) : (
                     <Ionicons name={"home-outline"} size={40}/>

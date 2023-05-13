@@ -26,6 +26,10 @@ export type City = {
   users?: Maybe<Array<User>>;
 };
 
+export type CityId = {
+  id: Scalars['Float'];
+};
+
 export type CityInput = {
   latitude?: InputMaybe<Scalars['Float']>;
   longitude?: InputMaybe<Scalars['Float']>;
@@ -33,27 +37,43 @@ export type CityInput = {
   photo?: InputMaybe<Scalars['String']>;
 };
 
+export type CityRequested = {
+  cityName: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: User;
   createCity: City;
+  createPoi: Poi;
   createUser: User;
   deleteCity: Scalars['Boolean'];
+  deletePoi: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
+  fetchCityName: Scalars['String'];
+  fetchPoiCoordinates: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['String'];
   sendPasswordEmail: User;
   updateCity: City;
+  updatePoi: Scalars['String'];
+  updateUser: Scalars['String'];
 };
 
 
 export type MutationChangePasswordArgs = {
-  data: UserChangePassword;
+  id: Scalars['Int'];
+  newPassword: Scalars['String'];
 };
 
 
 export type MutationCreateCityArgs = {
   data: CityInput;
+};
+
+
+export type MutationCreatePoiArgs = {
+  data: PoiInput;
 };
 
 
@@ -67,8 +87,23 @@ export type MutationDeleteCityArgs = {
 };
 
 
+export type MutationDeletePoiArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationFetchCityNameArgs = {
+  data: CityRequested;
+};
+
+
+export type MutationFetchPoiCoordinatesArgs = {
+  data: FindPoi;
 };
 
 
@@ -87,16 +122,30 @@ export type MutationUpdateCityArgs = {
   id: Scalars['Int'];
 };
 
+
+export type MutationUpdatePoiArgs = {
+  data: UpdatePoiInput;
+  id: Scalars['Int'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+  id: Scalars['Int'];
+};
+
 export type Poi = {
   __typename?: 'Poi';
   address: Scalars['String'];
   audio?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['Float']>;
+  city?: Maybe<City>;
   comments?: Maybe<Scalars['String']>;
   customize_gps_marker?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  gps_coordinates?: Maybe<Scalars['Float']>;
   id: Scalars['Float'];
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
   phone?: Maybe<Scalars['Float']>;
   photo?: Maybe<Scalars['String']>;
@@ -104,8 +153,19 @@ export type Poi = {
   website?: Maybe<Scalars['String']>;
 };
 
+export type PoiInput = {
+  address: Scalars['String'];
+  cityId: Scalars['Float'];
+  description?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+  name: Scalars['String'];
+  rating?: InputMaybe<Scalars['Float']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  Pois: Array<Poi>;
   cities: Array<City>;
   city: City;
   fetchToken: User;
@@ -120,12 +180,26 @@ export type QueryCityArgs = {
 
 
 export type QueryFetchTokenArgs = {
-  email: Scalars['String'];
+  id: Scalars['Float'];
+};
+
+export type UpdatePoiInput = {
+  address: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Float']>;
+};
+
+export type UpdateUserInput = {
+  cities?: InputMaybe<Array<CityId>>;
+  email?: InputMaybe<Scalars['String']>;
+  hashedPassword?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
   changePasswordToken?: Maybe<Scalars['String']>;
+  cities?: Maybe<Array<City>>;
   created_at?: Maybe<Scalars['Float']>;
   email?: Maybe<Scalars['String']>;
   hashedPassword?: Maybe<Scalars['String']>;
@@ -134,12 +208,8 @@ export type User = {
   role_id?: Maybe<Scalars['Float']>;
 };
 
-export type UserChangePassword = {
-  email: Scalars['String'];
-  newPassword: Scalars['String'];
-};
-
 export type UserInput = {
+  cities?: InputMaybe<Array<CityId>>;
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -147,6 +217,12 @@ export type UserInput = {
 export type UserSendPassword = {
   email: Scalars['String'];
   token?: InputMaybe<Scalars['String']>;
+};
+
+export type FindPoi = {
+  cityId: Scalars['Float'];
+  cityName: Scalars['String'];
+  poiNameOrAdress: Scalars['String'];
 };
 
 export type CreateUserMutationVariables = Exact<{

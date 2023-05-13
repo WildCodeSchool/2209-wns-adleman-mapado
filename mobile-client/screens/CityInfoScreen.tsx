@@ -13,12 +13,12 @@ interface WilderListItemProps {
 export default function CityInfoScreen({route}: WilderListItemProps) {
     const {
         name,
-        image
+        photo
     } = route.params;
 
     return (
         <View style={styles.container}>
-            <Image source={{uri: image}} style={styles.cityImage}/>
+            <Image source={{uri: photo}} style={styles.cityImage}/>
             <Text style={styles.cityTitle}>{name}</Text>
             <Text style={{padding: 20}}>Bordeaux, au cœur de la région viticole, est une ville portuaire située sur la Garonne, dans le
                 sud-ouest de la France. Elle est réputée pour la cathédrale gothique de Saint-André, ses manoirs
