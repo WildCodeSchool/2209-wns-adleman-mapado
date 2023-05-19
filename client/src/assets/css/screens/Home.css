@@ -191,7 +191,7 @@ form {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 1000vh;
     background: #2a2e39;
     content: '';
     opacity: 1;
@@ -202,6 +202,7 @@ form {
 
 .container--open .items-wrap::after {
     opacity: 0;
+    height: 100%;
 }
 
 .item {
