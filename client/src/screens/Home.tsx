@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Link, NavLink, useSearchParams} from "react-router-dom";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import AnimatedCard from "../components/AnimatedCard";
 import ICity from "../interfaces/ICity";
 import {filterBySearch} from "../utils/helpers";
@@ -73,12 +72,12 @@ export default function Home() {
                                         visitez.
                                     </p>
                                     <div className="demos">
-                                        <a href="/manage-cities">
+                                        <Link to="/manage-cities">
                                             Admin
-                                        </a>
-                                        <a href="/login">
+                                        </Link>
+                                        <Link to="/login">
                                             Connexion
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="search-input">
                                         <form>
