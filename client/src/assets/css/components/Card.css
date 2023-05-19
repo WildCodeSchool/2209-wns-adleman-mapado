@@ -1,7 +1,6 @@
 .cardStyle {
     height: fit-content;
     width: fit-content;
-    border-radius: 2rem;
     border: 1px solid white;
     padding: 2rem;
 }
@@ -28,6 +27,7 @@
 
 .mapCard {
     margin: 2rem auto;
+    height: calc(100vh - 138px - 4rem);
     width: fit-content;
     padding: 0;
     overflow: hidden;

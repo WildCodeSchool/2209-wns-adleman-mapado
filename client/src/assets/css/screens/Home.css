@@ -51,6 +51,11 @@ form {
     transform: translate3d(0, -100%, 0) translate3d(0, 250px, 0);
 }
 
+.container--open .intro__content {
+    background-color: #173472;
+    transition: background-color 1s;
+}
+
 .intro__image {
     position: absolute;
     bottom: 0;
@@ -171,10 +176,14 @@ form {
 
 .items-wrap {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
     padding: 280px 25px 25px;
     gap: 35px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
 }
 
 .items-wrap::after {
@@ -182,7 +191,7 @@ form {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background: #2a2e39;
     content: '';
     opacity: 1;
@@ -207,11 +216,15 @@ form {
 }
 
 .cardLink {
-    flex: 1 0 20%;
+    display: flex;
+    justify-content: center
 }
 
 .codrops-links {
     display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
 }
 
 .intro__image img {
@@ -222,18 +235,14 @@ form {
 
 
 @media screen and (max-width: 1440px) {
-    .cardLink {
-        height: fit-content;
-        -webkit-flex: 1 0 20%;
-        flex: 1 0 20%;
+    .items-wrap {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (max-width: 1000px) {
-    .cardLink {
-        height: fit-content;
-        -webkit-flex: 1 0 30%;
-        flex: 1 0 30%;
+    .items-wrap {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .item,
@@ -243,9 +252,7 @@ form {
 }
 
 @media screen and (max-width: 590px) {
-    .cardLink {
-        height: fit-content;
-        flex: 1 0 0;
-        margin: 0 auto;
+    .items-wrap {
+        grid-template-columns: repeat(1, 1fr);
     }
 }

@@ -34,7 +34,7 @@ function App() {
 
     return (
         <>
-            <Toaster position="top-center"/>
+            {/*<Toaster position="top-center"/>*/}
             <div style={styles}>
                 {showHeader && <Header/>}
                 <Routes>

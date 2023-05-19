@@ -1,0 +1,15 @@
+.backButton {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    color: white;
+    position: absolute;
+    top: 8rem;
+    left: 4rem;
+}
+
+.backButton svg {
+    width: 50px;
+    fill: #EC5D5C;
+}

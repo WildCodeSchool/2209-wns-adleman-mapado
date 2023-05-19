@@ -28,7 +28,11 @@ export default function Home() {
         } else (
             document.body.style.overflow = "scroll"
         )
+        console.log(headerShown)
+
     }, [headerShown])
+
+
     // takes in value from the search bar and returns a filtered list of the cities to display
     //(filter improves with each letter)
     //searchParams controls the URL (what comes after the "?")
@@ -72,7 +76,7 @@ export default function Home() {
                                         visitez.
                                     </p>
                                     <div className="demos">
-                                        <Link to="/manage-cities">
+                                        <Link to="/manage-cities" onClick={()=> setHeaderShown(false)}>
                                             Admin
                                         </Link>
                                         <Link to="/login">

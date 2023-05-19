@@ -1,7 +1,7 @@
 import React from "react";
 import Logout from "./Logout";
 import {Link} from "react-router-dom";
-import Mapado from "../assets/images/Mapado.png"
+import Mapado from "../assets/images/mapado-test.png"
 
 export default function Header() {
     return (
