@@ -29,7 +29,7 @@ function App() {
     <>
       <Toaster position="top-center" />
       <div style={styles}>
-        {window.location.pathname !== "/login" ? <Header /> : null}
+        {(window.location.pathname === "/login" || window.location.pathname === "/" ) ? null : <Header />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -38,7 +38,7 @@ function App() {
             path="/password/reset/:id/:token"
             element={<PasswordReset />}
           />
-          <Route path="*" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/manage-cities" element={<ManageCities />} />
           <Route path="/info/:cityName" element={<InfoCity />} />
           {/*<Route path="/map" element={<Map/>} />*/}
