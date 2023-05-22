@@ -1,11 +1,12 @@
 import Map from "../components/Map";
 import { useParams } from "react-router-dom";
-import { useGetCityQuery } from "../gql/generated/schema";
+import { useGetCityQuery, useGetProfileQuery } from "../gql/generated/schema";
 import { Marker, Popup } from "react-leaflet";
 import markerIconPng from "../assets/images/starred.png";
 import { Icon } from "leaflet";
 import ICity from "../interfaces/ICity";
 import IPoi from "../interfaces/IPoi";
+import AddPoi from "../components/AddPoi";
 
 export default function InfoCity() {
   const { cityName } = useParams();
@@ -39,8 +40,24 @@ export default function InfoCity() {
   //   const city: ICity = data?.city ? data?.city : null;
   //   const pois = city.poi;
 
+  const { data: currentUser } = useGetProfileQuery({
+    errorPolicy: "ignore",
+  });
+
+  const currentUserRole = currentUser?.profile?.role;
+  console.log(currentUserRole);
+
   return (
-    <div>
+    <div className="flex flex-col items-center">
+      {(currentUserRole === "superAdmin" ||
+        currentUserRole === "cityAdmin" ||
+        currentUserRole === "POICreator") && (
+        <div className={"flex items-center addPoi-container"}>
+          <span className={"text"}>Ajouter un point d'intérêt : </span>{" "}
+          <AddPoi cityId={city.id} cityName={city.name} />
+        </div>
+      )}
+
       <Map longitude={city.longitude} latitude={city.latitude}>
         {city.pois
           ? city.pois.map((e: IPoi, index: number) => (

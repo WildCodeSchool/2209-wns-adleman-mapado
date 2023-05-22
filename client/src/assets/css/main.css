@@ -1,4 +1,5 @@
 @import "./components/AnimatedCard.css";
+@import "./components/addPoi.css";
 @import "./components/Card.css";
 @import "./components/Header.css";
 @import "screens/Home.css";
@@ -7,3 +8,4 @@
 @import "screens/Register.css";
 @import "screens/ManageCities.css";
 @import "screens/Map.css";
+@import "screens/InfoCity.css"
