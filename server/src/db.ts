@@ -3,6 +3,7 @@ import {env, loadEnv} from "./env";
 import City from './entity/City';
 import User from './entity/User';
 import Poi from './entity/Poi';
+import Category from "./entity/Category";
 
 loadEnv();
 export default new DataSource({
@@ -13,6 +14,6 @@ export default new DataSource({
   password: "postgres",
   database: "postgres",
   synchronize: true,
-  entities: [City, User, Poi],
+  entities: [City, User, Poi, Category],
   logging: ["error"],
 });

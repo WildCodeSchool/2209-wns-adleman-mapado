@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Field, Float, InputType, ObjectType } from "type-graphql";
 import City from "./City";
+import Category from "./Category";
 
 @InputType()
 export class PoiInput {
@@ -103,7 +104,11 @@ class Poi {
   @Column({ nullable: true, type: "int" })
   phone?: number;
 
-  @Field({ nullable: true })
+  @Field(() => Category, { nullable: true })
+  @ManyToOne(() => Category, (c) => c.poi, { cascade: true, onDelete: "CASCADE" })
+  @JoinTable()
+  category: Category;
+
   @Column({ nullable: true, type: "int" })
   categoryId?: number;
 

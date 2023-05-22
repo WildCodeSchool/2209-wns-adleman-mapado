@@ -1,17 +1,25 @@
-import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm';
+import {PrimaryGeneratedColumn, Entity, Column, OneToMany} from 'typeorm';
 import Poi from './Poi';
+import {Field, InputType, ObjectType} from "type-graphql";
 
+@InputType()
+export class CategoryInput {
+    @Field()
+    name: string;
+}
 
 @Entity()
-class Category {
+@ObjectType()
+export default class Category {
+    @Field()
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field()
     @Column()
     name: string;
 
-    // @OneToMany(() => Poi, (p) => p.category)
-    // poi: Poi;
+    @Field(() => [Poi], {nullable: true})
+    @OneToMany(() => Poi, (p) => p.city)
+    poi?: Poi[];
 }
-
-export default Category;

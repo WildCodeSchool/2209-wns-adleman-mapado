@@ -16,6 +16,7 @@ import * as http from "http";
 import jwt from "jsonwebtoken";
 import User from "./entity/User";
 import cookieParser from "cookie-parser";
+import {CategoryResolver} from "./resolver/CategoryResolver";
 
 export interface ContextType {
   req: express.Request;
@@ -30,7 +31,7 @@ const start = async () => {
   const httpServer = http.createServer(app);
 
   const schema = await buildSchema({
-    resolvers: [CityResolver, UserResolver, PoiResolver],
+    resolvers: [CityResolver, UserResolver, PoiResolver, CategoryResolver],
     authChecker: async ({ context }: { context: ContextType }, roles) => {
       const tokenInHeaders = context.req.headers.authorization?.split(" ")[1];
       const tokenInCookie = context.req.cookies?.["token"];
