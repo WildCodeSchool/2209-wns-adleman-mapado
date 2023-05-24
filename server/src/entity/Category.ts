@@ -6,6 +6,9 @@ import {Field, InputType, ObjectType} from "type-graphql";
 export class CategoryInput {
     @Field()
     name: string;
+
+    @Field({ nullable: true })
+    poiId: number;
 }
 
 @Entity()
@@ -20,6 +23,6 @@ export default class Category {
     name: string;
 
     @Field(() => [Poi], {nullable: true})
-    @OneToMany(() => Poi, (p) => p.city)
+    @OneToMany(() => Poi, (p) => p.category)
     poi?: Poi[];
 }

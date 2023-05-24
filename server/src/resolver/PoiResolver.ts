@@ -10,7 +10,7 @@ export class PoiResolver {
   async Pois(): Promise<Poi[]> {
     return await datasource
       .getRepository(Poi)
-      .find({ relations: { city: true } });
+      .find({ relations: { city: true, category: true } });
   }
 
   @Mutation(() => Poi)

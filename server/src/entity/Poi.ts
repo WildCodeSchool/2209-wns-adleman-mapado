@@ -31,6 +31,9 @@ export class PoiInput {
 
   @Field()
   cityId: number;
+
+  @Field()
+  categoryId: number;
 }
 
 @InputType()
@@ -107,7 +110,7 @@ class Poi {
   @Field(() => Category, { nullable: true })
   @ManyToOne(() => Category, (c) => c.poi, { cascade: true, onDelete: "CASCADE" })
   @JoinTable()
-  category: Category;
+  category?: Category;
 
   @Column({ nullable: true, type: "int" })
   categoryId?: number;

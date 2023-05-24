@@ -7,7 +7,7 @@ import {ApolloError} from "apollo-server-errors";
 export class CategoryResolver {
     @Query(() => [Category])
     async categories(): Promise<Category[]> {
-        return await datasource.getRepository(Category).find();
+        return await datasource.getRepository(Category).find({relations: {poi: true}});
     }
 
     @Mutation(() => Category)
@@ -25,15 +25,15 @@ export class CategoryResolver {
     @Mutation(() => Category)
     async updateCategory(
         @Arg("id", () => Int) id: number,
-        @Arg("data") { name }: CategoryInput
+        @Arg("data") {name}: CategoryInput
     ): Promise<Category> {
-        const { affected } = await datasource
+        const {affected} = await datasource
             .getRepository(Category)
-            .update(id, { name });
+            .update(id, {name});
 
         if (affected === 0) throw new ApolloError("Category not found", "NOT_FOUND");
 
-        return { id, name };
+        return {id, name};
     }
 
 
