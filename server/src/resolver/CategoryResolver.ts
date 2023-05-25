@@ -35,6 +35,4 @@ export class CategoryResolver {
 
         return {id, name};
     }
-
-
 }

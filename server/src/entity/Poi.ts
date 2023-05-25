@@ -12,13 +12,13 @@ import Category from "./Category";
 @InputType()
 export class PoiInput {
   @Field()
-  name: string;
+  name?: string;
 
   @Field({ nullable: true })
   description?: string;
 
   @Field({})
-  address: string;
+  address?: string;
 
   @Field({ nullable: true })
   latitude?: number;
@@ -44,8 +44,8 @@ export class UpdatePoiInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field({})
-  address: string;
+  @Field({ nullable: true })
+  address?: string;
 
   @Field({ nullable: true })
   rating?: number;
