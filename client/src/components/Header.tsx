@@ -22,7 +22,7 @@ export default function Header() {
                 <img src={Mapado}/>
             </Link>
 
-            <div className="intro__subtitle">
+            {/* <div className="intro__subtitle">
                 <div className="codrops-links">
                     <div className="intro__description">
                         <p>
@@ -39,7 +39,7 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </nav>
 
     )

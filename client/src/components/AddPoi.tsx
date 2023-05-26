@@ -4,9 +4,10 @@ import { useFetchPoiCoordinatesMutation } from "../gql/generated/schema";
 interface PoiProps {
   cityId: number;
   cityName: string;
+  handleOpenModal?: () => void;
 }
 
-export default function AddPoi({ cityId, cityName }: PoiProps) {
+export default function AddPoi({ cityId, cityName, handleOpenModal }: PoiProps) {
   // Initialisation de l'objet poiRequested
   const [poiRequested, setPoiRequested] = useState({
     poiNameOrAdress: "",
@@ -22,7 +23,7 @@ export default function AddPoi({ cityId, cityName }: PoiProps) {
   };
 
   return (
-    <div>
+    <div className="poi_input">
       <input
         type="text"
         placeholder="Nom ou Adresse du POI"
@@ -36,9 +37,14 @@ export default function AddPoi({ cityId, cityName }: PoiProps) {
           }))
         }
       ></input>
+      <div className="button-container">
       <button onClick={onClickSendNewPoi} className={"tertiaryButton"}>
         Ajouter
       </button>
+      <button onClick={handleOpenModal} className={"secondaryButton"}>
+        Annuler
+      </button>
+      </div>
     </div>
   );
 }

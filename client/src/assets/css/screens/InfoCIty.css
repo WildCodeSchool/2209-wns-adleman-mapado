@@ -1,19 +1,50 @@
 .infoCity_container {
-    margin-top: 11rem;
+  margin-top: 11rem;
+}
+
+.infoCity_button_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
 }
 
 .backButton {
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    color: white;
-    position: absolute;
-    top: 8rem;
-    left: 4rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  color: white;
+  position: absolute;
+  top: 8rem;
+  left: 4rem;
 }
 
 .backButton svg {
-    width: 50px;
-    fill: #EC5D5C;
+  width: 50px;
+  fill: #ec5d5c;
+}
+
+.modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+.button {
+    height: 2.5rem;
+    width: 15rem;
+    border-radius: 45px;
+    background-color: #EC5D5C;
+    /* border: 3px solid #173472;
+    color: white; */
 }

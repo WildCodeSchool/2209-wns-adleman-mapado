@@ -2,6 +2,7 @@
 @import "./components/Card.css";
 @import "./components/Header.css";
 @import "./components/AddPoi.css";
+@import "./components/PoiModal.css";
 @import "./components/Badge.css";
 @import "screens/Home.css";
 @import "screens/Login.css";
@@ -9,6 +10,6 @@
 @import "screens/Register.css";
 @import "screens/ManageCities.css";
 @import "screens/Map.css";
-@import "screens/InfoCIty.css";
+@import "screens/InfoCity.css";
 @import "screens/EditCity.css";
 @import "screens/CitiesList.css";
