@@ -19,8 +19,10 @@ export default function AddPoi({ cityId, cityName, handleOpenModal }: PoiProps) 
 
   const onClickSendNewPoi = () => {
     sendPoiNameOrAdress({ variables: { data: poiRequested } });
+    //handleOpenModal()
     console.log("data envoyée au back", poiRequested);
   };
+
 
   return (
     <div className="poi_input">
@@ -42,7 +44,7 @@ export default function AddPoi({ cityId, cityName, handleOpenModal }: PoiProps) 
         Ajouter
       </button>
       <button onClick={handleOpenModal} className={"secondaryButton"}>
-        Annuler
+        Fermer
       </button>
       </div>
     </div>
