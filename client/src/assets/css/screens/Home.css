@@ -244,7 +244,8 @@ form {
     height: 22vw;
     flex: 1 0 25%;
     outline: none;
-    border: 5px solid #2a2e39;
+    border-style: solid;
+    border-color: #2a2e39;
     border-width: 0 5px 10px;
     background: #2a2e39;
 }
