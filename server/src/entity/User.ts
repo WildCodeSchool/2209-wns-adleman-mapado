@@ -39,7 +39,6 @@ export class UserInput {
   password: string;
 }
 
-
 @ObjectType()
 @InputType()
 export class UpdateUserInput {
@@ -52,8 +51,6 @@ export class UpdateUserInput {
   @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
   hashedPassword?: string;
 }
-
-
 
 @Entity()
 @ObjectType()

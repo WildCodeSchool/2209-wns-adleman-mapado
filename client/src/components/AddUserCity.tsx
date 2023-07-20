@@ -1,4 +1,4 @@
-import { useCitiesQuery, useGetProfileQuery, useUpdateUserCitiesMutation } from "../gql/generated/schema";
+import { useCitiesQuery } from "../gql/generated/schema";
 
 export default function AddUserCity({
   handleOpenModal,
@@ -19,46 +19,46 @@ export default function AddUserCity({
     onClickAssignCity(cityId, cityName, selectedUserId, selectedUserEmail);
   }
 
-
   return (
-    <div
-      style={{
-        position: "absolute",
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(50, 74, 168, 0.5)",
-        zIndex: 100,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        top: "20%",
-      }}
-    >
-      <p>Villes:{" "}{userCitiesList?.join(", ")}</p>
-      <ul>
+    <div className={"editCity_container"}>
+      <ul className="select-cities-container">
+        <h2 className={"editCity_title"}>Assigner une nouvelle ville</h2>
         {cities.map((city) => {
-          return (
-            <li key={city.name} style={{ border: "1px solid black" }}>
-              <option value={city.name}>{city.name} </option>
-              <button
-                onClick={() =>
-                  handleOnClickAssignCity(
-                    city.id,
-                    city.name,
-                    selectedUser.id,
-                    selectedUser.email
-                  )
-                }
-                style={{ all: "unset" }}
-              >
-                Select
-              </button>
-            </li>
-          );
+          if (!userCitiesList?.includes(city.name))
+            return (
+              <li className="select-cities-container" key={city.name}>
+                <div className="select-city">
+                  <option
+                    className={"city-title"}
+                    style={{ color: "#ec5d5c" }}
+                    value={city.name}
+                  >
+                    {city.name}
+                  </option>
+                  <button
+                    className="modal-select-button"
+                    onClick={() =>
+                      handleOnClickAssignCity(
+                        city.id,
+                        city.name,
+                        selectedUser.id,
+                        selectedUser.email
+                      )
+                    }
+                  >
+                    Select
+                  </button>
+                </div>
+              </li>
+            );
         })}
+        <p className="title">
+          Villes déjà assignées: {userCitiesList?.join(", ")}
+        </p>
       </ul>
-      <button onClick={() => handleOpenModal()}>Close</button>
+      <button className="modal-close-button" onClick={() => handleOpenModal()}>
+        Close
+      </button>
     </div>
   );
 }

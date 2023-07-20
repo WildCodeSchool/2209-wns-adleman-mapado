@@ -8,7 +8,6 @@ import {
   useUpdateUserCitiesMutation,
   useUpdateUserRoleMutation,
   useUsersQuery,
-  GetUserCitiesQuery,
   useGetUserCitiesQuery,
 } from "../gql/generated/schema";
 
@@ -25,7 +24,6 @@ export default function ManageUsers() {
     email: "",
     role: "",
   });
-  const [userCities, setUserCities] = useState<String[]>([]);
   const [selectedUserForCity, setSelectedUserForCity] = useState({
     email: "",
     id: 0,
@@ -47,13 +45,7 @@ export default function ManageUsers() {
   const currentUserRole = currentUser?.profile?.role;
   const currentUserId = currentUser?.profile.id;
 
-  const [updateCity, { data: updatedUserCities }] =
-    useUpdateUserCitiesMutation();
-  // const userCitiesNames = updatedUserCities?.updateUserCities.cities?.map(
-  //   (city) => city.name
-  // );
-
-  // console.log("----userCitiesNames", userCitiesNames);
+  const [updateCity] = useUpdateUserCitiesMutation();
 
   const { data: cities, refetch: refetchUserCities } = useGetUserCitiesQuery({
     variables: { getUserCitiesId: userId! },
@@ -62,11 +54,6 @@ export default function ManageUsers() {
   const userCitiesList = cities?.getUserCities?.cities?.map(
     (city) => city.name
   );
-  console.log("------userCitiesList", userCitiesList);
-
-  // useEffect(() => {
-  //   if (userCitiesList && userCitiesList.length) setUserCities(userCitiesList)
-  // }, [userCitiesList])
 
   async function handleSelectedUserForCity(
     selectedUserId: any,
@@ -141,9 +128,9 @@ export default function ManageUsers() {
     setOpenModal(() => !openModal);
   };
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [userDetails, refetch()]);
+  useEffect(() => {
+    refetchUsers();
+  }, [userDetails, refetchUsers()]);
 
   const goBack = () => {
     navigate(-1);
@@ -310,17 +297,40 @@ export default function ManageUsers() {
                             >
                               {role}
                             </option>
-                            {/* <button
+                            <button
                               disabled={role === user.role ? true : false}
                               className={
                                 role === user.role
                                   ? "primaryButtonDisabled"
                                   : "primaryButton"
                               }
-                              onClick={handleOpenModal}
+                              onClick={() =>
+                                role === "POI Creator"
+                                  ? handleSelectedUserForCity(
+                                      user.id,
+                                      user.email,
+                                      role
+                                    )
+                                  : onClickRoleChange(
+                                      user.id,
+                                      user.email!,
+                                      role!
+                                    )
+                              }
                             >
                               Select
-                            </button> */}
+                            </button>
+                            {openModal &&
+                              createPortal(
+                                <AddUserCity
+                                  userCitiesList={userCitiesList}
+                                  handleOpenModal={handleOpenModal}
+                                  onClickAssignCity={onClickAssignCity}
+                                  selectedUser={selectedUserForCity}
+                                  role={role}
+                                />,
+                                document.body
+                              )}
                           </div>
                         );
                       })}

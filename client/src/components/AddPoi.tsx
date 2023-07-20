@@ -64,6 +64,7 @@ export default function AddPoi({ cityId, cityName }: PoiProps) {
           backgroundColor: "green",
           icon: checkIcon,
         });
+        setPoiRequested({ poiNameOrAdress: "", cityId: 0, cityName: "" });
         /*  console.log("log de toastData au click après le set", toastData); */
       })
       .catch((erreur: ApolloError) => {

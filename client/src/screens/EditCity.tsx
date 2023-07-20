@@ -3,6 +3,7 @@ import {
   useGetCityQuery,
   useUpdateCityMutation,
   useDeletePoiMutation,
+  useGetProfileQuery,
 } from "../gql/generated/schema";
 import Card from "../components/Card";
 import ICity from "../interfaces/ICity";
@@ -12,6 +13,7 @@ import { useNavigate } from "react-router";
 import IPoi from "../interfaces/IPoi";
 import Rocket from "../assets/images/rocket.gif";
 import BadgeEdit from "../components/BadgeEdit";
+import { resetCaches } from "@apollo/client";
 
 export default function EditCity() {
   //
@@ -71,6 +73,9 @@ export default function EditCity() {
     city?.pois?.push(poi);
   });
 
+  const { data: currentUser } = useGetProfileQuery();
+  const currentUserRole = currentUser?.profile?.role;
+
   //
   // FONCTIONS ONCLICK
   //
@@ -104,6 +109,7 @@ export default function EditCity() {
         },
       });
     }
+ 
   };
 
   return (
@@ -125,44 +131,50 @@ export default function EditCity() {
         <h2 className={"title"}>Ajouter un point d'intérêt</h2>
         <AddPoi cityId={city.id} cityName={city.name}></AddPoi>
       </div>
+
       <div className={"editCity_InputsContainer"}>
-        <h2 className={"title"}>Modifier la ville</h2>
-        <form onSubmit={handleSubmit} className={"editCity_form"}>
-          <div className={"editCity_form_inputContainer"}>
-            <label id={"name"}>Nom</label>
-            <input
-              type="text"
-              placeholder={city.name}
-              value={cityDataToUpdate.name}
-              onChange={(e) =>
-                setCityDataToUpdate((prevState) => ({
-                  ...prevState,
-                  name: e.target.value,
-                }))
-              }
-            />
-          </div>
-          <div className={"editCity_form_inputContainer"}>
-            <label id={"photo"}>Photo</label>
-            <input
-              type="text"
-              placeholder={
-                city.photo?.toString() || "copier le lien de la photo"
-              }
-              value={cityDataToUpdate.photo}
-              onChange={(e) =>
-                setCityDataToUpdate((prevState) => ({
-                  ...prevState,
-                  photo: e.target.value,
-                }))
-              }
-            />
-          </div>
-          <button type="submit" className={"tertiaryButton"}>
-            Modifier {city.name}
-          </button>
-        </form>
+        {currentUserRole !== "POI Creator" && (
+          <>
+            <h2 className={"title"}>Modifier la ville</h2>
+            <form onSubmit={handleSubmit} className={"editCity_form"}>
+              <div className={"editCity_form_inputContainer"}>
+                <label id={"name"}>Nom</label>
+                <input
+                  type="text"
+                  placeholder={city.name}
+                  value={cityDataToUpdate.name}
+                  onChange={(e) =>
+                    setCityDataToUpdate((prevState) => ({
+                      ...prevState,
+                      name: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <div className={"editCity_form_inputContainer"}>
+                <label id={"photo"}>Photo</label>
+                <input
+                  type="text"
+                  placeholder={
+                    city.photo?.toString() || "copier le lien de la photo"
+                  }
+                  value={cityDataToUpdate.photo}
+                  onChange={(e) =>
+                    setCityDataToUpdate((prevState) => ({
+                      ...prevState,
+                      photo: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <button type="submit" className={"tertiaryButton"}>
+                Modifier {city.name}
+              </button>
+            </form>
+          </>
+        )}
       </div>
+
       <div className="poi_list">
         {city.pois?.length ? (
           <>
@@ -180,5 +192,4 @@ export default function EditCity() {
       </div>
     </Card>
   );
-
 }

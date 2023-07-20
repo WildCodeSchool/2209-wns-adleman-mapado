@@ -90,6 +90,7 @@ export class UserResolver {
     return true;
   }
 
+  @Authorized<UserRole>([UserRole.SUPERADMIN, UserRole.CITYADMIN])
   @Mutation(() => User)
   async updateUserCities(
     @Arg("userId", () => Int) userId: number,
@@ -99,17 +100,13 @@ export class UserResolver {
       .getRepository(User)
       .findOne({ where: { id: userId }, relations: { cities: true } });
     if (!user) throw new ApolloError("User not found", "NOT_FOUND");
-
     let city = await datasource
       .getRepository(City)
       .findOne({ where: { id: cityId } });
-
     const cityExists = user.cities.filter((city) => {
       console.log(city.id, cityId);
       return city.id === cityId;
     });
-    console.log("cityExists", cityExists);
-
     if (cityExists.length) {
       throw new ApolloError("City already assigned", "DUPLICATE_NOT_ALLOWED");
     } else if (!city) {
@@ -117,11 +114,7 @@ export class UserResolver {
     } else {
       user.cities = [...user.cities, city];
     }
-
     datasource.getRepository(User).save(user);
-
-    // return `${updatedUser.email} has been updated:
-    //   ${JSON.stringify(updatedUser.cities.map((city) => city.name))}`;
     return user;
   }
 
