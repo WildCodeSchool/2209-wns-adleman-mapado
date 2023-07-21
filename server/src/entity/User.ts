@@ -63,9 +63,9 @@ class User {
   @Column({ type: "text" })
   email: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
-  hashedPassword?: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "text" })
+    userName?: string;
 
   @Field()
   @Column({ default: UserRole.VISITOR, enum: UserRole })
@@ -83,8 +83,8 @@ class User {
 
 @InputType()
 export class UserSendPassword {
-  @Field()
-  email: string;
+    @Field()
+    email: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -108,28 +108,28 @@ export class UserChangePassword {
 // }
 
 const hashingOptions = {
-  memoryCost: 2 ** 16,
-  timeCost: 5,
-  type: argon2id,
+    memoryCost: 2 ** 16,
+    timeCost: 5,
+    type: argon2id,
 };
 
 export const hashPassword = async (plainPassword: string): Promise<string> =>
-  await hash(plainPassword, hashingOptions);
+    await hash(plainPassword, hashingOptions);
 
 export const verifyPassword = async (
-  plainPassword: string,
-  hashedPassword: string
+    plainPassword: string,
+    hashedPassword: string
 ): Promise<boolean> =>
-  await verify(hashedPassword, plainPassword, hashingOptions);
+    await verify(hashedPassword, plainPassword, hashingOptions);
 
 export const getSafeAttributes = (user: User) => ({
-  ...user,
-  hashedPassword: undefined,
+    ...user,
+    hashedPassword: undefined,
 });
 
 export const sendPasswordEmail = async (
-  email: string,
-  token?: string
+    email: string,
+    token?: string
 ): Promise<UserSendPassword> => ({ email, token });
 
 export default User;

@@ -5,7 +5,6 @@ import MapView from 'react-native-maps';
 
 
 export default function ForgotPassword({navigation}) {
-   
 
     return (
         <TextInput

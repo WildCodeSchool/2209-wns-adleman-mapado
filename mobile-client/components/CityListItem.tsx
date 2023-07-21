@@ -1,26 +1,33 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
-import {City} from "../gql/generated/schema";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { City } from "../gql/generated/schema";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface WilderListItemProps {
     city: City;
-    navigation : any;
+    navigation: any;
 }
 
-export default function CityListItem({city, navigation}: WilderListItemProps) {
-
+export default function CityListItem({
+    city,
+    navigation,
+}: WilderListItemProps) {
     return (
         <View style={styles.listItem}>
             <View>
-                {city.image ? (
-                    <Image source={{uri: city.image}} style={{width: 200, height: 200}}
+                {city.photo ? (
+                    <Image
+                        source={{ uri: city.photo }}
+                        style={{ width: 200, height: 200 }}
                     />
                 ) : (
-                    <Ionicons name={"home-outline"} size={40}/>
+                    <Ionicons name={"home-outline"} size={40} />
                 )}
             </View>
             <Text style={styles.listItemText}>{city.name}</Text>
-            <TouchableOpacity style={styles.buttonItem} onPress={() => navigation.navigate('Info', city)}>
+            <TouchableOpacity
+                style={styles.buttonItem}
+                onPress={() => navigation.navigate("Info", city)}
+            >
                 <Text style={styles.buttonText}>Voir la ville</Text>
             </TouchableOpacity>
         </View>
@@ -29,7 +36,7 @@ export default function CityListItem({city, navigation}: WilderListItemProps) {
 
 const styles = StyleSheet.create({
     listItem: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         padding: 20,
         flex: 1,
         alignItems: "center",
@@ -41,7 +48,7 @@ const styles = StyleSheet.create({
     },
     listItemText: {
         fontSize: 25,
-        color: "#EC5D5B"
+        color: "#EC5D5B",
     },
     buttonItem: {
         padding: 15,
@@ -55,6 +62,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     buttonText: {
-        color: "#EC5D5B"
-    }
+        color: "#EC5D5B",
+    },
 });
