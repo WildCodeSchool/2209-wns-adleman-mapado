@@ -14,7 +14,7 @@ export default function Badge({text, customClass, functionOnClick, categoryId}: 
             <span>
                 {text}
             </span>
-            <button className="deletePoiButton" onClick={functionOnClick} data-category-id={categoryId}>
+            <button className="poiButton" onClick={functionOnClick} data-category-id={categoryId}>
                 <CloseIcon/>
             </button>
         </div>

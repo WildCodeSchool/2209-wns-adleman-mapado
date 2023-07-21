@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSendPasswordEmailMutation } from "../gql/generated/schema";
-import Header from "../components/Header";
+import {useNavigate} from "react-router";
 import Card from "../components/Card";
 import toast from "react-hot-toast";
 
@@ -8,6 +8,11 @@ export default function PasswordReset() {
   const [email, setEmail] = useState({
     email: "",
   });
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+};
 
   const [sendEmail] = useSendPasswordEmailMutation();
   return (
@@ -39,7 +44,7 @@ export default function PasswordReset() {
             ></input>
           </label>
           <div>
-            <button className={"primaryButton"}>Retour</button>
+            <button className={"primaryButton"} onClick={goBack}>Retour</button>
             <button
               type="submit"
               className={"tertiaryButton"}

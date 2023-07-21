@@ -108,22 +108,12 @@ class Poi {
   phone?: number;
 
   @Field(() => Category, { nullable: true })
-  @ManyToOne(() => Category, (c) => c.poi, { cascade: true, onDelete: "CASCADE" })
-  @JoinTable()
+  @ManyToOne(() => Category, (c) => c.poi, { eager: true, cascade: true, onDelete: "CASCADE" })
+  @JoinTable({ name: "categoryId" })
   category?: Category;
 
   @Column({ nullable: true, type: "int" })
   categoryId?: number;
-
-  //Potentiellement à implémenter
-  // @Column()
-  // email: string;
-
-  // @Column()
-  // opening_hours: string;
-  // @Field()
-  // @OneToMany(() => Category, (c) => c.poi)
-  // category: Category;
 
   @Field(() => City, { nullable: true })
   // cascade: true permet de lier les POI à la ville concernée
@@ -148,6 +138,18 @@ export class findPOI {
 
   @Field()
   cityId?: number;
+
+  @Field({ nullable: true })
+  categoryId?: number;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  rating?: number;
+
+  @Field({ nullable: true })
+  photo?: string;
 }
 
 export default Poi;

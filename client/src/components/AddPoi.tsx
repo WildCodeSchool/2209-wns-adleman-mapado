@@ -1,127 +1,199 @@
-import { useState } from "react";
+import React, {useState} from 'react';
 import {
-  useFetchPoiCoordinatesMutation,
-  useGetCityQuery,
-  useGetProfileQuery,
+    FindPoi,
+    useCategoriesQuery,
+    useFetchPoiCoordinatesMutation,
+    useGetCityQuery,
 } from "../gql/generated/schema";
-import { ApolloError } from "@apollo/client";
+import {ApolloError} from "@apollo/client";
 import checkIcon from "../assets/svg/check.svg";
 import errorIcon from "../assets/svg/error.svg";
 import Toast from "./Toast";
+import Rating from '@mui/material/Rating';
+import {Link} from "react-router-dom";
 
 interface PoiProps {
-  cityId: number;
-  cityName: string;
+    cityId: number;
+    cityName: string;
 }
 
 interface PoiRequestedInterface {
-  poiNameOrAdress: string;
-  cityId: number;
-  cityName: string;
+    poiNameOrAdress: string;
+    cityId: number;
+    cityName: string;
+    categoryId: number | null;
+    description: string;
+    rating: number | null;
+    photo: string | undefined;
 }
 
 interface ToastInterface {
-  id: number;
-  title: string;
-  description: string;
-  icon: string;
-  backgroundColor: string;
+    id: number;
+    title: string;
+    description: string;
+    icon: string;
+    backgroundColor: string;
 }
 
-export default function AddPoi({ cityId, cityName }: PoiProps) {
-  // Initialisation de l'objet poiRequested
-  const [poiRequested, setPoiRequested] = useState<PoiRequestedInterface>({
-    poiNameOrAdress: "",
-    cityId: 0,
-    cityName: "",
-  });
+export default function AddPoi({cityId, cityName}: PoiProps) {
+    // Initialisation de l'objet poiRequested
+    const [poiRequested, setPoiRequested] = useState<PoiRequestedInterface>({
+        poiNameOrAdress: "",
+        cityId: 0,
+        cityName: "",
+        categoryId: null,
+        description: "",
+        rating: null,
+        photo: undefined
+    });
 
-  // Initialisation de l'objet Toast
-  const [toastData, setToastData] = useState<ToastInterface>({
-    id: 0,
-    title: "",
-    description: "",
-    icon: "",
-    backgroundColor: "",
-  });
-  const [showToast, setShowToast] = useState(false);
+    console.log(poiRequested)
+    // Initialisation de l'objet Toast
+    const [toastData, setToastData] = useState<ToastInterface>({
+        id: 0,
+        title: "",
+        description: "",
+        icon: "",
+        backgroundColor: "",
+    });
+    const [showToast, setShowToast] = useState(false);
 
-  const [sendPoiNameOrAddress] = useFetchPoiCoordinatesMutation();
+    const [sendPoiNameOrAddress] = useFetchPoiCoordinatesMutation();
 
-  const { refetch } = useGetCityQuery({
-    variables: { query: cityName! },
-  });
+    const {data} = useCategoriesQuery()
+    const categories = data?.categories ?? [];
 
-  const onClickSendNewPoi = () => {
-    sendPoiNameOrAddress({ variables: { data: poiRequested } })
-      .then((res) => {
-        /* console.log("log du then", res); */
 
-        setToastData({
-          id: Math.floor(Math.random() * 100 + 1),
-          description: res?.data?.fetchPoiCoordinates!,
-          title: "Super ! 👍",
-          backgroundColor: "green",
-          icon: checkIcon,
-        });
-        setPoiRequested({ poiNameOrAdress: "", cityId: 0, cityName: "" });
-        /*  console.log("log de toastData au click après le set", toastData); */
-      })
-      .catch((erreur: ApolloError) => {
-        /* console.log(erreur); */
-        setToastData({
-          id: Math.floor(Math.random() * 100 + 1),
-          description: erreur.message,
-          title: "Oups... 🧐",
-          backgroundColor: "#bd2424",
-          icon: errorIcon,
-        });
-      })
-      .finally(() => {
-        setShowToast(true);
-        refetch();
-      });
-  };
-  const { data: currentUser } = useGetProfileQuery({
-    errorPolicy: "ignore",
-  });
+    const {refetch} = useGetCityQuery({
+        variables: {query: cityName!},
+    });
 
-  const currentUserRole = currentUser?.profile?.role;
-  console.log(currentUserRole);
+    const onClickSendNewPoi = () => {
+        sendPoiNameOrAddress({variables: {data: poiRequested as FindPoi}})
+            .then((res) => {
+                /* console.log("log du then", res); */
 
-  if (
-    currentUserRole === "Super Administrator" ||
-    currentUserRole === "City Administrator" ||
-    currentUserRole === "POI Creator"
-  ) {
+                setToastData({
+                    id: Math.floor(Math.random() * 100 + 1),
+                    description: res?.data?.fetchPoiCoordinates!,
+                    title: "Super ! 👍",
+                    backgroundColor: "green",
+                    icon: checkIcon,
+                });
+                /*  console.log("log de toastData au click après le set", toastData); */
+            })
+            .catch((erreur: ApolloError) => {
+                /* console.log(erreur); */
+                setToastData({
+                    id: Math.floor(Math.random() * 100 + 1),
+                    description: erreur.message,
+                    title: "Oups... 🧐",
+                    backgroundColor: "#bd2424",
+                    icon: errorIcon,
+                });
+            })
+            .finally(() => {
+                setShowToast(true);
+                refetch();
+            });
+    };
+
     return (
-      <>
-        <input
-          type="text"
-          placeholder="Nom ou Adresse du POI"
-          value={poiRequested.poiNameOrAdress}
-          onChange={(e) =>
-            setPoiRequested((prevState) => ({
-              ...prevState,
-              poiNameOrAdress: e.target.value,
-              cityId: cityId,
-              cityName: cityName,
-            }))
-          }
-        ></input>
-        <button onClick={onClickSendNewPoi} className={"tertiaryButton"}>
-          Ajouter
-        </button>
-        <Toast
-          toast={toastData}
-          position={"bottomRight"}
-          autoDelete={true}
-          autoDeleteTime={5000}
-          visible={showToast}
-          setVisible={setShowToast}
-        />
-      </>
+        <>
+            <input
+                type="text"
+                placeholder="Nom ou Adresse du POI"
+                value={poiRequested.poiNameOrAdress}
+                onChange={(e) =>
+                    setPoiRequested((prevState) => ({
+                        ...prevState,
+                        poiNameOrAdress: e.target.value,
+                        cityId: cityId,
+                        cityName: cityName,
+                    }))
+                }
+            />
+            <input
+                type="text"
+                placeholder="Photo"
+                value={poiRequested.photo}
+                onChange={(e) =>
+                    setPoiRequested((prevState) => ({
+                        ...prevState,
+                        photo: e.target.value,
+                    }))
+                }
+            />
+
+            <label htmlFor="categories" className={"selectCategoryLabel"}>Catégorie</label>
+
+            <div className="add_category_container">
+                <select
+                    className="categorySelect"
+                    name="categories"
+                    id="categories"
+                    defaultValue=""
+                    onChange={(e) => {
+                        console.log(e.target.value);
+                        setPoiRequested((prevState) => ({
+                            ...prevState,
+                            categoryId: parseInt(e.target.value, 10),
+                        }));
+                    }}
+                >
+                    <option value="" className="defaultValue">Sélectionner la catégorie du POI</option>
+                    {categories ? categories.map((category, index) => {
+                        return (
+                            <option
+                                key={index}
+                                value={category.id}
+                            >
+                                {category.name}
+                            </option>
+                        );
+                    }) : null}
+                </select>
+                <Link className="create_category_link" to="/manage-categories">Créer une nouvelle catégorie</Link>
+            </div>
+
+            <div className="poi_description">
+                <textarea
+                    name="description"
+                    id="description"
+                    placeholder="Description"
+                    defaultValue=""
+                    onChange={(e) =>
+                        setPoiRequested((prevState) => ({
+                            ...prevState,
+                            description: e.target.value
+                        }))
+                    }
+                />
+            </div>
+            <Rating
+                name="half-rating"
+                defaultValue={0}
+                precision={0.5}
+                className="rating-stars"
+                onChange={(e) =>
+                    setPoiRequested((prevState) => ({
+                        ...prevState,
+                        rating: (parseInt((e.target as HTMLInputElement).value, 10))
+                    }))
+                }
+            />
+
+            <button onClick={onClickSendNewPoi} className={"tertiaryButton"}>
+                Ajouter
+            </button>
+            <Toast
+                toast={toastData}
+                position={"bottomRight"}
+                autoDelete={true}
+                autoDeleteTime={5000}
+                visible={showToast}
+                setVisible={setShowToast}
+            />
+        </>
     );
-  }
-  return null;
 }

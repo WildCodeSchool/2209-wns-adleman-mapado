@@ -16,6 +16,39 @@
 }
 
 .backButton svg {
-  width: 30px;
-  fill: #ec5d5c;
+    width: 30px;
+    fill: #EC5D5C;
+}
+
+.leaflet-popup-content{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.leaflet-popup-content .tooltip-category{
+    background-color: #173472;
+    color: white;
+    width: fit-content;
+    padding: 0 4px;
+}
+
+.leaflet-popup-content .description {
+    padding: 4px;
+    border: 1px solid #173472;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0;
+}
+
+.rating-stars svg {
+    fill: white;
+}
+
+.tooltip-poi_title {
+    font-weight: 800;
+}
+
+.leaflet-popup-content p.tooltip-poi_address {
+    margin: 0;
 }

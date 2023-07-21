@@ -4,7 +4,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -d postgres -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -29,6 +29,8 @@ services:
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:8000}
       - REACT_APP_CITIES_API_KEY=${REACT_APP_CITIES_API_KEY}
       - REACT_APP_PHOTOS_API_KEY=${REACT_APP_PHOTOS_API_KEY}
+      - REACT_APP_POI_API_KEY=${REACT_APP_POI_API_KEY}
+
     image: grischk/mapado-server
     networks:
       - prodNetwork

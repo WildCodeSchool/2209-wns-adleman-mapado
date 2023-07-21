@@ -11,19 +11,24 @@
     justify-content: center;
 }
 
-.badgeEditStyle .deletePoiButton {
+.badgeEditStyle .poiButton {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #173472;
+    border: 1px solid white;
     border-radius: 50%;
     padding: 0;
 }
 
-.badgeEditStyle .deletePoiButton svg {
-    fill: #173472;
+.badgeEditStyle .poiButton svg {
+    fill: white;
     width: 24px;
     height: 24px;
+}
+
+.badgeEditStyle .category {
+    color: #173472;
+    font-weight: 800;
 }
 
 .icons_wrapper {

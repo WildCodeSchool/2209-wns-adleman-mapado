@@ -1,0 +1,42 @@
+.selectCategoryLabel {
+    display: none;
+}
+
+.categorySelect {
+    border-radius: 20px;
+    text-align: center;
+    padding: 0 6px;
+    height: 2.5rem;
+    border: 3px solid #173472;
+    box-sizing: content-box;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000000;
+    width: 20rem;
+}
+
+textarea {
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    min-height: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000000;
+}
+
+.poi_description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.poi_description label, .create_category_link {
+    color: white;
+}
+
+.add_category_container {
+    display: flex;
+    flex-direction: column;
+}

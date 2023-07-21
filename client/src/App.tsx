@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useSearchParams, useLocation } from "react-router-dom";
-import CSS from "csstype";
 import { Toaster } from "react-hot-toast";
 import { AnimatePresence } from "framer-motion";
 import { useCitiesQuery } from "./gql/generated/schema";
@@ -10,7 +9,7 @@ import Home from "./screens/Home";
 import ManageCities from "./screens/ManageCities";
 import ManageUsers from "./screens/ManageUsers";
 import Register from "./screens/Register";
-import PasswordReset from "./screens/PasswordReset";
+import PasswordReset from "./screens/PasswordReset1";
 import EmailPassword from "./screens/EmailPassword";
 import InfoCity from "./screens/InfoCity";
 
@@ -24,10 +23,6 @@ import ErrorPage from "./components/ErrorPage";
 import IState from "./interfaces/IState";
 import "./App.css";
 
-const styles: CSS.Properties = {
-  margin: 0,
-  backgroundSize: "100vw",
-};
 
 function App() {
   const { data } = useCitiesQuery();
@@ -76,7 +71,7 @@ function App() {
   return (
     <>
       <Toaster position="top-center" />
-      <div style={styles}>
+      <div>
         <Header
           currentUrl={currentUrl}
           state={state}

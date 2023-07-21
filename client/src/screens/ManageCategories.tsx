@@ -23,10 +23,11 @@ export default function AddManageCities() {
     //
     const [sendNewCategory] = useCreateCategoryMutation({
         // Après avoir effectué la mutation, appel à refetch pour réactualiser les catégories
-        onCompleted: () => refetch()});
+        onCompleted: () => refetch()
+    });
     const [deleteCategory] = useDeleteCategoryMutation({onCompleted: () => refetch()})
     const [updateCategory] = useUpdateCategoryMutation({onCompleted: () => refetch()})
-    const {loading: loadingCities, data, refetch} = useCategoriesQuery();
+    const {data, refetch} = useCategoriesQuery();
 
     const categories = data?.categories ?? [];
 
@@ -103,7 +104,7 @@ export default function AddManageCities() {
                 <div className="categories_badges_container">
                     {categories.map((category: ICategory, index: number) => {
                         return (
-                            <BadgeEdit text={category.name} key={index} functionOnClick={onClickDeleteCategory}
+                            <BadgeEdit contentA={category.name} key={index} functionOnClick={onClickDeleteCategory}
                                        functionOnClick2={handleClickOpen}
                                        categoryId={category.id}
                             />

@@ -51,3 +51,11 @@
     top: -500px;
     right: -1000px;
 }
+
+.title.editCity_title {
+    margin-bottom: 0;
+}
+
+.editCity_container {
+    margin-bottom: 3rem;
+}
