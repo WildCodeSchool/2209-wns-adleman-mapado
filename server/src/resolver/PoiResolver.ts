@@ -38,7 +38,9 @@ export class PoiResolver {
             where: {id},
             relations: {category: true, city: true},
         });
-        const {affected} = await datasource.getRepository(Poi).update(id, {name, address, description});
+        const {affected} = await datasource
+            .getRepository(Poi)
+            .update(id, {name, address, description});
 
         if (affected === 0) throw new ApolloError("Poi not found", "NOT_FOUND");
 

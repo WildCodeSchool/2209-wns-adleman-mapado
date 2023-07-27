@@ -220,7 +220,7 @@ export default function ManageUsers() {
                             >
                               <>
                                 <button
-                                  disabled={role === user.role ? true : false}
+                                  disabled={role === user.role}
                                   className={
                                     role === user.role
                                       ? "primaryButtonDisabled"
@@ -310,8 +310,8 @@ export default function ManageUsers() {
                             >
                               {role}
                             </option>
-                            {/* <button
-                              disabled={role === user.role ? true : false}
+                            <button
+                              disabled={role === user.role}
                               className={
                                 role === user.role
                                   ? "primaryButtonDisabled"
@@ -320,7 +320,7 @@ export default function ManageUsers() {
                               onClick={handleOpenModal}
                             >
                               Select
-                            </button> */}
+                            </button>
                           </div>
                         );
                       })}

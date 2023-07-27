@@ -34,13 +34,23 @@ export default function Admin() {
             <NavLink to={`/manage-categories`} className="country_link">
               Paramétrer les catégories
             </NavLink>
+
           </>
         )}
         {(currentUserRole === "Super Administrator" ||
           currentUserRole === "City Administrator") && (
-          <NavLink to={`/manage-users`} className="country_link">
-            Paramétrer les utilisateurs
-          </NavLink>
+            <NavLink to={`/manage-users`} className="country_link">
+              Paramétrer les utilisateurs
+            </NavLink>
+
+        )}
+
+        {(currentUserRole === "Super Administrator" ||
+            currentUserRole === "City Administrator" || currentUserRole === "POI Creator")   && (
+            <NavLink to={`/manage-cities`} className="country_link">
+              Paramétrer les villes
+            </NavLink>
+
         )}
       </div>
     </Card>

@@ -67,7 +67,7 @@ export default function Header({
         <div className="demos">
           <NavLink to="/cities-list">Accueil</NavLink>
           {(currentUserRole === "Super Administrator" ||
-            currentUserRole === "City Administrator") && (
+            currentUserRole === "City Administrator" || currentUserRole === "POI Creator") && (
             <NavLink to="/admin">Admin</NavLink>
           )}
           {currentUser ? (
@@ -125,7 +125,7 @@ export default function Header({
           <div className="demos">
             <NavLink to="/cities-list">Accueil</NavLink>
             {(currentUserRole === "Super Administrator" ||
-              currentUserRole === "City Administrator") && (
+              currentUserRole === "City Administrator" || currentUserRole === "POI Creator") && (
               <NavLink to="/admin">Admin</NavLink>
             )}
             {currentUser ? (

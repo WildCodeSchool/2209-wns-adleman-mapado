@@ -25,6 +25,9 @@ export class UserRoleInput {
 
   @Field()
   role: string;
+
+  @Field({ nullable: true })
+  profilePicture?: string;
 }
 
 @InputType()
@@ -46,10 +49,10 @@ export class UpdateUserInput {
   @IsEmail()
   email?: string;
 
-  @Field({ nullable: true })
+  @Field()
   @MinLength(8)
   @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
-  hashedPassword?: string;
+  hashedPassword: string;
 }
 
 @Entity()
@@ -63,9 +66,9 @@ class User {
   @Column({ type: "text" })
   email: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
-  hashedPassword?: string;
+  @Field()
+  @Column({type: "text" })
+  hashedPassword: string;
 
   @Field()
   @Column({ default: UserRole.VISITOR, enum: UserRole })
