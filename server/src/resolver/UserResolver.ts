@@ -180,7 +180,14 @@ export class UserResolver {
 
   @Authorized()
   @Query(() => User)
-  async profile(@Ctx() ctx: ContextType): Promise<User> {
+  async profile(@Ctx() ctx: ContextType): Promise<{
+    role: string;
+    cities: City[];
+    hashedPassword: undefined;
+    changePasswordToken: string;
+    id: number;
+    email: string
+  }> {
     return getSafeAttributes(ctx.currentUser as User);
   }
 
