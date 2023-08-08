@@ -12,7 +12,7 @@ import ManageUsers from "./screens/ManageUsers";
 import Register from "./screens/Register";
 import PasswordReset from "./screens/PasswordReset";
 import EmailPassword from "./screens/EmailPassword";
-import InfoCity from "./screens/InfoCity";
+import InfoCity from "./screens/InfoCity";    
 
 import EditCity from "./screens/EditCity";
 import CitiesList from "./screens/CitiesList";

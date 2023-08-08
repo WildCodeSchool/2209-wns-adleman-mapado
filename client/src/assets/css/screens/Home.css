@@ -42,7 +42,7 @@ form {
     height: 100vh;
     max-height: 100vh;
     background: linear-gradient(152deg, rgba(2, 0, 36, 1) 0%, rgba(23, 52, 114, 1) 59%, rgba(236, 93, 92, 1) 100%);
-
+    
 }
 
 .intro__container {
@@ -58,7 +58,8 @@ form {
 .intro__text {
     min-width: 50%;
     padding-left: 1.8em;
-    margin-top: 15em;
+    margin-top: 12%;
+    /* margin-top: 15em; */
 }
 
 .intro__main__title {
@@ -81,7 +82,8 @@ form {
 }
 
 .intro__image {
-    width: 80em;
+    width: 60%;
+    /* anciennement 80em */
     transform: translate(-5em, -13em);
 }
 

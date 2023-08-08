@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
+import React, {useState} from "react";
 import "../App.css";
 import "leaflet/dist/leaflet.css";
 
@@ -10,6 +11,7 @@ interface MapProps {
 
 function Map({ longitude, latitude, children }: MapProps) {
   return (
+
     //Si on a une latitude et longitude on affiche la carte
     longitude && latitude ? (
       <MapContainer

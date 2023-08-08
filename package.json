@@ -23,5 +23,8 @@
   "dependencies": {
     "framer-motion": "^10.12.16",
     "react-hot-toast": "^2.4.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2"
   }
 }

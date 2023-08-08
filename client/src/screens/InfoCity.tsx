@@ -7,9 +7,10 @@ import {Icon} from "leaflet";
 import ICity from "../interfaces/ICity";
 import IPoi from "../interfaces/IPoi";
 import {useNavigate} from "react-router";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {motion} from "framer-motion";
 import Rating from "@mui/material/Rating";
+import ModalPoi from "../components/modalPoi";
 
 export default function InfoCity() {
     const {cityName} = useParams();
@@ -52,12 +53,15 @@ export default function InfoCity() {
 
     console.log("Log de l'objet FRONT", city);
 
+    const[modalOpen, setModalOpen] = useState(false);
+
     return (
         <motion.div
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             transition={{duration: 3}}
             className="infoCity_container">
+            <ModalPoi cityId={city.id} cityName={city.name}></ModalPoi>
             <button className={"backButton"} onClick={goBack}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                     <path d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"/>

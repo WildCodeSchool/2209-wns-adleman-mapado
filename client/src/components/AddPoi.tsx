@@ -80,10 +80,10 @@ export default function AddPoi({cityId, cityName}: PoiProps) {
                     backgroundColor: "green",
                     icon: checkIcon,
                 });
-                /*  console.log("log de toastData au click après le set", toastData); */
+              
             })
             .catch((erreur: ApolloError) => {
-                /* console.log(erreur); */
+             console.log(erreur)
                 setToastData({
                     id: Math.floor(Math.random() * 100 + 1),
                     description: erreur.message,

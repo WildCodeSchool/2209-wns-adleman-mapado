@@ -1,0 +1,88 @@
+/* Modal button */
+.btn-modal {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #173472;
+    border-radius: 20px;
+    z-index: 999;
+    position: absolute;
+    top: 10rem;
+    left: 8rem;
+    color: #ec5d5c;
+}
+
+.modal-input{
+    background-color: #173472;
+    color: #ec5d5c;
+    margin: 7px;
+    padding: 5px; 
+}
+
+/* Modal Container */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+#description {
+  margin: 5px;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-width: 400px;
+    width: 100%;
+    position: absolute;
+    top: 13rem;
+    left: 8rem;
+
+}
+
+/* Close Button */
+.close-modal {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.close-modal:hover {
+    background-color: #c0392b;
+}
+
+.categorySelect:hover,
+.categorySelect:focus {
+    border-color: #007bff;
+}
+
+.custom-option {
+    font-size: 16px;
+    padding: 8px;
+}
