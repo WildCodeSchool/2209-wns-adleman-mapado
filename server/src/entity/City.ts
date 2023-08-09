@@ -57,7 +57,7 @@ export default class City {
   longitude?: number;
 
   @Field(() => [User], { nullable: true })
-  @ManyToMany(() => User, (u) => u.cities)
+  @ManyToMany(() => User, (u) => u.cities, { eager: true, cascade: true, onDelete: "CASCADE" })
   users?: User[];
 
   @Field(() => [Poi], { nullable: true })

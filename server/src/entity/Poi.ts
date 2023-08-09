@@ -5,61 +5,63 @@ import {
   Entity,
   JoinTable,
 } from "typeorm";
-import { Field, Float, InputType, ObjectType } from "type-graphql";
+import {Field, Float, InputType, Int, ObjectType} from "type-graphql";
 import City from "./City";
 import Category from "./Category";
 
 @InputType()
 export class PoiInput {
-  @Field()
+  @Field(()=> String)
+  @Column({ type: "varchar" })
   name?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   description?: string;
 
-  @Field({})
+  @Field(()=> String)
   address?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> Float, { nullable: true })
   latitude?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> Float, { nullable: true })
   longitude?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> Int, { nullable: true })
   rating?: number;
 
-  @Field()
+  @Field(()=> Int)
   cityId: number;
 
-  @Field()
+  @Field(()=> Int)
   categoryId: number;
 }
 
 @InputType()
 export class UpdatePoiInput {
-  @Field({ nullable: true })
+  @Field(()=> String, { nullable: true })
+  @Column({ type: "varchar" })
   name?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   address?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> Int,{ nullable: true })
   rating?: number;
 }
 
 @Entity()
 @ObjectType()
 class Poi {
-  @Field()
+  @Field(()=> Int)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column({ length: 25 })
+  @Field(()=> String)
+  @Column({ length: 25, type: "varchar" })
   name: string;
 
   @Field(() => Float, { nullable: true })
@@ -70,40 +72,40 @@ class Poi {
   @Column({ nullable: true, type: "decimal" })
   longitude?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, type: "text" })
   customize_gps_marker?: string;
 
-  @Field()
-  @Column({ length: 100 })
+  @Field(()=> String)
+  @Column({ length: 100,  type: "varchar" })
   address: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, length: 500 })
   description?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, type: "text" })
   photo?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> Int,{ nullable: true })
   @Column({ nullable: true, type: "int" })
   rating?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, type: "text" })
   comments?: string;
 
   // pas sur du type ni de la cohérence
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, type: "text" })
   audio?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   @Column({ nullable: true, type: "text" })
   website?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> Int,{ nullable: true })
   @Column({ nullable: true, type: "int" })
   phone?: number;
 
@@ -122,7 +124,7 @@ class Poi {
   @JoinTable()
   city: City;
 
-  @Column()
+  @Field(()=> Int)
   cityId: number;
 }
 
@@ -130,25 +132,25 @@ class Poi {
 
 @InputType()
 export class findPOI {
-  @Field()
+  @Field(()=> String)
   cityName: string;
 
-  @Field()
+  @Field(()=> String)
   poiNameOrAdress: string;
 
-  @Field()
+  @Field(()=> Int)
   cityId?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> Int,{ nullable: true })
   categoryId?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
+  @Field(()=> Int,{ nullable: true })
   rating?: number;
 
-  @Field({ nullable: true })
+  @Field(()=> String,{ nullable: true })
   photo?: string;
 }
 

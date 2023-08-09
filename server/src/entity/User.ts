@@ -66,16 +66,16 @@ class User {
   @Column({ type: "text" })
   email: string;
 
-  @Field()
-  @Column({type: "text" })
-  hashedPassword: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
+  hashedPassword?: string;
 
   @Field()
   @Column({ default: UserRole.VISITOR, enum: UserRole })
   role: string;
 
   @Field(() => [City], { defaultValue: [] })
-  @ManyToMany(() => City, (c) => c.users, { cascade: true })
+  @ManyToMany(() => City, (c) => c.users)
   @JoinTable()
   cities: City[];
 

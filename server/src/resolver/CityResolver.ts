@@ -31,14 +31,17 @@ export class CityResolver {
         return city;
     }
 
-    @Query(() => City)
-    async cityByUserId(@Arg("user", () => Int) users: []): Promise<City[]> {
+    @Query(() => [City])
+    async cityByUserId(@Arg("user", () => Int) userId: number): Promise<City[]> {
         const cities = await datasource
             .getRepository(City)
-            .find({where: {users}});
+            .find({ where: { users: { id: userId } } });
 
-        if (cities === null) throw new ApolloError("cities not found", "NOT_FOUND");
-        console.log(cities.map((city: City) => city.name))
+        if (!cities || cities.length === 0) {
+            throw new ApolloError("Cities not found", "NOT_FOUND");
+        }
+
+        console.log(cities.map((city: City) => city.name));
 
         return cities;
     }

@@ -40,8 +40,8 @@ export default function AddManageCities() {
 
     // fonction gql qui récupère la valeur de l'input
     //REFETCH POSSIBLE ICI
-    const [deleteCity] = useDeleteCityMutation();
-    const {data} = useCitiesQuery();
+    const [deleteCity] = useDeleteCityMutation({onCompleted: () => refetch()});
+    const {data, refetch} = useCitiesQuery();
     const cities = data?.cities ?? [];
 
     //
