@@ -1,14 +1,9 @@
-import {Arg, Int, Mutation, Query, Resolver, Authorized} from "type-graphql";
-import City, {
-    CityInput,
-    CityRequested,
-    UpdateCityInput,
-} from "../entity/City";
+import {Arg, Authorized, Int, Mutation, Query, Resolver} from "type-graphql";
+import City, {CityInput, CityRequested, UpdateCityInput,} from "../entity/City";
 import datasource from "../db";
 import {ApolloError} from "apollo-server-errors";
 import {env} from "../environment";
 import {UserRole} from "../entity/User";
-import Poi from "../entity/Poi";
 
 @Resolver(City)
 export class CityResolver {
@@ -60,20 +55,19 @@ export class CityResolver {
         return true;
     }
 
-    @Authorized<UserRole>([UserRole.SUPERADMIN])
     @Mutation(() => City)
     async updateCity(
         @Arg("id", () => Int) id: number,
         @Arg("data") data: UpdateCityInput
     ): Promise<City | null> {
-        const cityToUpdate = await datasource.getRepository(City).findOne({
-            where: {id},
-        });
+
         const {affected} = await datasource.getRepository(City).update(id, data);
 
         if (affected === 0) throw new ApolloError("City not found", "NOT_FOUND");
 
-        return cityToUpdate;
+        return await datasource.getRepository(City).findOne({
+            where: {id},
+        });
     }
 
     // On récupère le string du front
