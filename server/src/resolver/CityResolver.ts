@@ -55,6 +55,7 @@ export class CityResolver {
         return true;
     }
 
+    @Authorized<UserRole>([UserRole.SUPERADMIN])
     @Mutation(() => City)
     async updateCity(
         @Arg("id", () => Int) id: number,
