@@ -144,7 +144,7 @@ export class UserResolver {
     const user = await datasource
       .getRepository(User)
       .findOne({ where: { email } });
-    ///const hashedPassword = await hashPassword(password);
+    // const hashedPassword = await hashPassword(password);
 
     if (
       user === null ||
