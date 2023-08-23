@@ -122,6 +122,16 @@ export class UserResolver {
     return `${updatedUser.email} been assigned ${updatedUser.role} role`;
   }
 
+  @Query(() => User)
+  async getUserCities(@Arg("id") id: number): Promise<User> {
+    const user = await datasource
+      .getRepository(User)
+      .findOne({ where: { id }, relations: { cities: true } });
+    if (!user) throw new ApolloError("no such user", "NOT_FOUND");
+
+    return user;
+  }
+
   @Mutation(() => String)
   async login(
     @Arg("data") { email, password }: UserInput,

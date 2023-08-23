@@ -5,6 +5,8 @@ import {
   useChangePasswordMutation,
   useFetchTokenQuery,
 } from "../gql/generated/schema";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const resetPasswordStyles: CSS.Properties = {
   height: "100vh",
@@ -55,7 +57,6 @@ const secondaryButtonStyles: CSS.Properties = {
 };
 
 export default function PasswordReset() {
-
   const [serverToken, setServerToken] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword(!showPassword);
@@ -105,7 +106,12 @@ export default function PasswordReset() {
           style={passwordResetContainerStyles}
           onSubmit={(e) => {
             e.preventDefault();
-            changePassword({ variables: { newPassword: credentials.newPassword, changePasswordId: +credentials.id } })
+            changePassword({
+              variables: {
+                newPassword: credentials.newPassword,
+                changePasswordId: +credentials.id,
+              },
+            })
               .then(() => {
                 console.log("success");
               })
@@ -120,10 +126,19 @@ export default function PasswordReset() {
               placeholder="Nouveau mot de passe"
               value={credentials.newPassword}
               onChange={(e) =>
-                setCredentials({ id: cleanId ?? "", newPassword: e.target.value })
+                setCredentials({
+                  id: cleanId ?? "",
+                  newPassword: e.target.value,
+                })
               }
             ></input>
-            <button type="button" onClick={togglePassword}>{showPassword ? "Hide password" : "Show password"}</button>
+            <button
+              type="button"
+              onClick={togglePassword}
+              style={{ color: "#EC5D5C" }}
+            >
+              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </button>
           </label>
           <div>
             <button style={secondaryButtonStyles}>Retour</button>

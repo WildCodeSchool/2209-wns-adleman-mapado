@@ -136,210 +136,215 @@ export default function ManageUsers() {
     navigate(-1);
   };
 
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <div style={{ zIndex: 1 }}>
-      <div className="max-w-screen-xl mx-auto px-5 min-h-screen">
-        <button className={"backButton"} onClick={goBack}>
-          {" "}
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-            <path d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z" />
-          </svg>
-        </button>
-        <div className="grid divide-y divide-neutral-200 max-w-xl mx-auto mt-8">
-          <h1 className={"title"} style={{ marginTop: "20%" }}>
-            Gérer les utilisateurs
-          </h1>
-          <h2 className={"editUser_title"} style={{ color: "white" }}>
+      <>
+        {!currentUserRole && goHome()}
+        <div className="max-w-screen-xl mx-auto px-5 min-h-screen">
+          <button className={"backButton"} onClick={goBack}>
             {" "}
-            Vous êtes un {currentUserRole}
-          </h2>
-          {currentUserRole === "Super Administrator" &&
-            users
-              .filter((currentUser) => currentUser.id !== currentUserId)
-              .map((user) => {
-                return (
-                  <div className="py-5" key={user.email}>
-                    <details className="group">
-                      <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <h2 className={"editUser_title"}>
-                          {user.email} est actuellement un {user.role}
-                        </h2>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+              <path d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z" />
+            </svg>
+          </button>
+          <div className="grid divide-y divide-neutral-200 max-w-xl mx-auto mt-8">
+            <h1 className={"manageUsers_title"}>Gérer les utilisateurs</h1>
+            <h2 className={"editUser_title"} style={{ color: "white" }}>
+              {" "}
+              Vous êtes un {currentUserRole}
+            </h2>
+            {currentUserRole === "Super Administrator" &&
+              users
+                .filter((currentUser) => currentUser.id !== currentUserId)
+                .map((user) => {
+                  return (
+                    <div className="py-5" key={user.email}>
+                      <details className="group">
+                        <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+                          <h2 className={"editUser_title"}>
+                            {user.email} est actuellement un {user.role}
+                          </h2>
 
-                        <span
-                          className="transition group-open:rotate-180"
-                          onClick={() => setUserId(user.id)}
-                        >
-                          <svg
-                            fill="none"
-                            height="24"
-                            shapeRendering="geometricPrecision"
-                            stroke="white"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                            viewBox="0 0 24 24"
-                            width="24"
+                          <span
+                            className="transition group-open:rotate-180"
+                            onClick={() => setUserId(user.id)}
                           >
-                            <path d="M6 9l6 6 6-6"></path>
-                          </svg>
-                        </span>
-                      </summary>
-                      <h3 className={"editUser_title"}>
-                        Villes: {userCitiesList?.join(", ")}
-                      </h3>
-                      {SuperAdminRoles.map((role, index) => {
-                        return (
-                          <div key={index} className={"editUser_container"}>
-                            <option
-                              className={
-                                role === user.role
-                                  ? "editUser_labelCurrent"
-                                  : "editUser_label"
-                              }
-                              key={index}
-                              value={role}
+                            <svg
+                              fill="none"
+                              height="24"
+                              shapeRendering="geometricPrecision"
+                              stroke="white"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="1.5"
+                              viewBox="0 0 24 24"
+                              width="24"
                             >
-                              {role}
-                            </option>
-                            <div
-                              className="modal-wrapper"
-                              style={{ position: "relative" }}
-                            >
-                              <>
-                                <button
-                                  disabled={role === user.role ? true : false}
-                                  className={
-                                    role === user.role
-                                      ? "primaryButtonDisabled"
-                                      : "primaryButton"
-                                  }
-                                  onClick={() =>
-                                    role === "POI Creator" ||
-                                    role === "City Administrator"
-                                      ? handleSelectedUserForCity(
-                                          user.id,
-                                          user.email,
-                                          role
-                                        )
-                                      : onClickRoleChange(
-                                          user.id,
-                                          user.email!,
-                                          role!
-                                        )
-                                  }
-                                >
-                                  Select
-                                </button>
-                                {openModal &&
-                                  createPortal(
-                                    <AddUserCity
-                                      userCitiesList={userCitiesList}
-                                      handleOpenModal={handleOpenModal}
-                                      onClickAssignCity={onClickAssignCity}
-                                      selectedUser={selectedUserForCity}
-                                      role={role}
-                                    />,
-                                    document.body
-                                  )}
-                              </>
+                              <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                          </span>
+                        </summary>
+                        <h3 className={"editUser_title"}>
+                          Villes: {userCitiesList?.join(", ")}
+                        </h3>
+                        {SuperAdminRoles.map((role, index) => {
+                          return (
+                            <div key={index} className={"editUser_container"}>
+                              <option
+                                className={
+                                  role === user.role
+                                    ? "editUser_labelCurrent"
+                                    : "editUser_label"
+                                }
+                                key={index}
+                                value={role}
+                              >
+                                {role}
+                              </option>
+                              <div
+                                className="modal-wrapper"
+                                style={{ position: "relative" }}
+                              >
+                                <>
+                                  <button
+                                    disabled={role === user.role ? true : false}
+                                    className={
+                                      role === user.role
+                                        ? "primaryButtonDisabled"
+                                        : "primaryButton"
+                                    }
+                                    onClick={() =>
+                                      role === "POI Creator" ||
+                                      role === "City Administrator"
+                                        ? handleSelectedUserForCity(
+                                            user.id,
+                                            user.email,
+                                            role
+                                          )
+                                        : onClickRoleChange(
+                                            user.id,
+                                            user.email!,
+                                            role!
+                                          )
+                                    }
+                                  >
+                                    Select
+                                  </button>
+                                  {openModal &&
+                                    createPortal(
+                                      <AddUserCity
+                                        userCitiesList={userCitiesList}
+                                        handleOpenModal={handleOpenModal}
+                                        onClickAssignCity={onClickAssignCity}
+                                        selectedUser={selectedUserForCity}
+                                        role={role}
+                                      />,
+                                      document.body
+                                    )}
+                                </>
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
-                    </details>
-                  </div>
-                );
-              })}
+                          );
+                        })}
+                      </details>
+                    </div>
+                  );
+                })}
 
-          {/* City Administrator view */}
-          {currentUserRole === "City Administrator" &&
-            users
-              .filter(
-                (aUser) =>
-                  !aUser.role.includes("Super Administrator") &&
-                  !aUser.role.includes("City Administrator")
-              )
-              .map((user) => {
-                return (
-                  <div className="py-5" key={user.email}>
-                    <details className="group">
-                      <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                        <h2 className={"editUser_title"}>
-                          {user.email} est actuellement un {user.role}
-                        </h2>
-                        <span className="transition group-open:rotate-180">
-                          <svg
-                            fill="none"
-                            height="24"
-                            shapeRendering="geometricPrecision"
-                            stroke="white"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                            viewBox="0 0 24 24"
-                            width="24"
-                          >
-                            <path d="M6 9l6 6 6-6"></path>
-                          </svg>
-                        </span>
-                      </summary>
-                      {CityAdminRoles.map((role, index) => {
-                        return (
-                          <div key={index} className={"editUser_container"}>
-                            <option
-                              className={
-                                role === user.role
-                                  ? "editUser_labelCurrent"
-                                  : "editUser_label"
-                              }
-                              key={index}
-                              value={role}
+            {/* City Administrator view */}
+            {currentUserRole === "City Administrator" &&
+              users
+                .filter(
+                  (aUser) =>
+                    !aUser?.role?.includes("Super Administrator") &&
+                    !aUser?.role?.includes("City Administrator")
+                )
+                .map((user) => {
+                  return (
+                    <div className="py-5" key={user.email}>
+                      <details className="group">
+                        <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+                          <h2 className={"editUser_title"}>
+                            {user.email} est actuellement un {user.role}
+                          </h2>
+                          <span className="transition group-open:rotate-180">
+                            <svg
+                              fill="none"
+                              height="24"
+                              shapeRendering="geometricPrecision"
+                              stroke="white"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="1.5"
+                              viewBox="0 0 24 24"
+                              width="24"
                             >
-                              {role}
-                            </option>
-                            <button
-                              disabled={role === user.role ? true : false}
-                              className={
-                                role === user.role
-                                  ? "primaryButtonDisabled"
-                                  : "primaryButton"
-                              }
-                              onClick={() =>
-                                role === "POI Creator"
-                                  ? handleSelectedUserForCity(
-                                      user.id,
-                                      user.email,
-                                      role
-                                    )
-                                  : onClickRoleChange(
-                                      user.id,
-                                      user.email!,
-                                      role!
-                                    )
-                              }
-                            >
-                              Select
-                            </button>
-                            {openModal &&
-                              createPortal(
-                                <AddUserCity
-                                  userCitiesList={userCitiesList}
-                                  handleOpenModal={handleOpenModal}
-                                  onClickAssignCity={onClickAssignCity}
-                                  selectedUser={selectedUserForCity}
-                                  role={role}
-                                />,
-                                document.body
-                              )}
-                          </div>
-                        );
-                      })}
-                    </details>
-                  </div>
-                );
-              })}
+                              <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                          </span>
+                        </summary>
+                        {CityAdminRoles.map((role, index) => {
+                          return (
+                            <div key={index} className={"editUser_container"}>
+                              <option
+                                className={
+                                  role === user.role
+                                    ? "editUser_labelCurrent"
+                                    : "editUser_label"
+                                }
+                                key={index}
+                                value={role}
+                              >
+                                {role}
+                              </option>
+                              <button
+                                disabled={role === user.role ? true : false}
+                                className={
+                                  role === user.role
+                                    ? "primaryButtonDisabled"
+                                    : "primaryButton"
+                                }
+                                onClick={() =>
+                                  role === "POI Creator"
+                                    ? handleSelectedUserForCity(
+                                        user.id,
+                                        user.email,
+                                        role
+                                      )
+                                    : onClickRoleChange(
+                                        user.id,
+                                        user.email!,
+                                        role!
+                                      )
+                                }
+                              >
+                                Select
+                              </button>
+                              {openModal &&
+                                createPortal(
+                                  <AddUserCity
+                                    userCitiesList={userCitiesList}
+                                    handleOpenModal={handleOpenModal}
+                                    onClickAssignCity={onClickAssignCity}
+                                    selectedUser={selectedUserForCity}
+                                    role={role}
+                                  />,
+                                  document.body
+                                )}
+                            </div>
+                          );
+                        })}
+                      </details>
+                    </div>
+                  );
+                })}
+          </div>
         </div>
-      </div>
+      </>
     </div>
   );
 }

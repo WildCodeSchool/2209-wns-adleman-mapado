@@ -109,7 +109,11 @@ class User {
   role: string;
 
   @Field(() => [City], { defaultValue: [] })
-  @ManyToMany(() => City, (c) => c.users, { cascade: true })
+  @ManyToMany(() => City, (c) => c.users, {
+    eager: true,
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinTable()
   cities: City[];
 

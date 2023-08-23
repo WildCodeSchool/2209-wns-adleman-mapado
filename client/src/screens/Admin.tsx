@@ -25,25 +25,32 @@ export default function Admin() {
           </svg>
         </button>
         <h1 className={"title"}>Admin</h1>
-        {currentUserRole === "Super Administrator" && (
-          <NavLink to={`/manage-categories`} className="country_link">
-            Paramétrer les catégories
-          </NavLink>
-        )}
+        <p style={{margin: "2rem"}}>
+          {currentUserRole === "Super Administrator" && (
+            <NavLink to={`/manage-categories`} className="country_link">
+              Paramétrer les catégories
+            </NavLink>
+          )}
+        </p>
 
-        {(currentUserRole === "Super Administrator" ||
-          currentUserRole === "City Administrator" ||
-          currentUserRole === "POI Creator") && (
-          <NavLink to={`/manage-cities`} className="country_link">
-            Paramétrer les villes
-          </NavLink>
-        )}
-        {(currentUserRole === "Super Administrator" ||
-          currentUserRole === "City Administrator") && (
-          <NavLink to={`/manage-users`} className="country_link">
-            Paramétrer les utilisateurs
-          </NavLink>
-        )}
+        <p style={{margin: "2rem"}}>
+          {(currentUserRole === "Super Administrator" ||
+            currentUserRole === "City Administrator" ||
+            currentUserRole === "POI Creator") && (
+            <NavLink to={`/manage-cities`} className="country_link">
+              Paramétrer les villes
+            </NavLink>
+          )}
+        </p>
+
+        <p style={{margin: "2rem"}}>
+          {(currentUserRole === "Super Administrator" ||
+            currentUserRole === "City Administrator") && (
+            <NavLink to={`/manage-users`} className="country_link">
+              Paramétrer les utilisateurs
+            </NavLink>
+          )}
+        </p>
       </div>
     </Card>
   );

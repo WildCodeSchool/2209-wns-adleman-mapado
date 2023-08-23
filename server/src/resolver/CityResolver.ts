@@ -80,8 +80,6 @@ export class CityResolver {
       headers: { "x-api-key": env.REACT_APP_CITIES_API_KEY },
     };
 
-    // Ajouter des try / catch pour les appels
-
     let urlCityAPI =
       "https://api.api-ninjas.com/v1/geocoding?country=FR&city=" + cityName;
 

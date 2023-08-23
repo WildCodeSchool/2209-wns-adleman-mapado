@@ -51,6 +51,7 @@ export default function AddUserCity({
                 </div>
               </li>
             );
+          
         })}
         <p className="title">
           Villes déjà assignées: {userCitiesList?.join(", ")}
