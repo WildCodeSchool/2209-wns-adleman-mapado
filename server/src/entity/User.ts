@@ -84,8 +84,8 @@ class User {
   @Column({ nullable: true, type: "date" })
   created_at: number;
 
-  @Field()
-  @Column({ type: "text" })
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
   email?: string;
 
   @Field({ nullable: true })
