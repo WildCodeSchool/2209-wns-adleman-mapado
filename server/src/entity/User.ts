@@ -85,7 +85,7 @@ class User {
   created_at: number;
 
   @Field()
-  @Column({type: "text" })
+  @Column({ type: "text" })
   email?: string;
 
   @Field({ nullable: true })
@@ -96,8 +96,8 @@ class User {
   @Column({ nullable: true, type: "text" })
   profilePicture?: string;
 
-  @Field()
-  @Column({ type: "text" })
+  @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
   hashedPassword?: string;
 
   @Field()
