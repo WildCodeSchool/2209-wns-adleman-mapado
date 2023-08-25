@@ -47,6 +47,7 @@ export class UpdateUserInput {
   email?: string;
 
   @Field({ nullable: true })
+  @Column({ nullable: true, type: "text" })
   @MinLength(8)
   @Matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)
   hashedPassword?: string;
