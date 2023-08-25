@@ -1,8 +1,8 @@
-import {Arg, Int, Mutation, Query, Resolver} from "type-graphql";
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import City, {
-    CityInput,
-    CityRequested,
-    UpdateCityInput,
+  CityInput,
+  CityRequested,
+  UpdateCityInput,
 } from "../entity/City";
 import datasource from "../db";
 import { ApolloError } from "apollo-server-errors";
@@ -67,7 +67,11 @@ export class CityResolver {
   async fetchCityName(
     @Arg("data") data: CityRequested
   ): Promise<string | ApolloError> {
-    const { cityName } = data;
+    let { cityName } = data;
+    const cityNameList = cityName.split("");
+    const cityNameFirstChar = cityNameList.at(0)?.toUpperCase();
+    const cityNameChars = cityNameList.slice(1).join("").toLowerCase();
+    cityName = cityNameFirstChar + cityNameChars;
 
     if (cityName === "") {
       return new ApolloError("Entrez un nom de ville svp ! 🙏");
@@ -149,5 +153,4 @@ export class CityResolver {
       );
     }
   }
-
 }

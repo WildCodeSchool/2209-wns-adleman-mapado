@@ -84,12 +84,8 @@ class User {
   @Column({ nullable: true, type: "date" })
   created_at: number;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "int" })
-  role_id?: number;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
+  @Field()
+  @Column({type: "text" })
   email?: string;
 
   @Field({ nullable: true })
@@ -100,11 +96,11 @@ class User {
   @Column({ nullable: true, type: "text" })
   profilePicture?: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
+  @Field()
+  @Column({ type: "text" })
   hashedPassword?: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Column({ default: UserRole.VISITOR, enum: UserRole })
   role: string;
 

@@ -1,67 +1,62 @@
-import CSS from "csstype";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router";
+import CSS from "csstype";
 import {
   useChangePasswordMutation,
   useFetchTokenQuery,
 } from "../gql/generated/schema";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
-const resetPasswordStyles: CSS.Properties = {
-  height: "100vh",
-  width: "100vw",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  backgroundColor: "#173472",
-  position: "absolute",
-  paddingTop: "2rem",
-};
+import toast from "react-hot-toast";
 
 const passwordResetContainerStyles: CSS.Properties = {
-  height: "100vh",
-  width: "70vw",
   display: "flex",
   flexDirection: "column",
-  backgroundColor: "#173472",
-
+  marginTop: "10rem",
   justifyContent: "space-around",
   alignItems: "center",
-  border: "2px solid #E2FE53",
 };
 
 const inputStyles: CSS.Properties = {
   textAlign: "center",
   borderRadius: "10px",
-  width: "50rem",
+  width: "30rem",
   height: "3.5rem",
   border: "2px solid #EC5D5C",
   fontFamily: "Rubik",
 };
 
+const secondaryButtonStyles: CSS.Properties = {
+  height: "2.5rem",
+  width: "6rem",
+  backgroundColor: "#ffffff",
+  borderRadius: "15px",
+  border: "3px solid #173472",
+};
+
 const primaryButtonStyles: CSS.Properties = {
   height: "2.5rem",
   width: "15rem",
+  borderRadius: "15px",
+  border: "3px solid #173472",
   backgroundColor: "#EC5D5C",
-  border: "3px solid #EC5D5C",
-  color: "#FFFFFF",
-  margin: "10rem",
-};
-
-const secondaryButtonStyles: CSS.Properties = {
-  height: "2.5rem",
-  width: "15rem",
-  border: "3px solid #EC5D5C",
+  color: "white",
 };
 
 export default function PasswordReset() {
   const [serverToken, setServerToken] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+
   const togglePassword = () => setShowPassword(!showPassword);
 
   const { token, id } = useParams();
+
+  const navigate = useNavigate();
+
+  const goToLogin = () => {
+    navigate("/login");
+  };
 
   //create clean string form of id
   const cleanId = id?.replace(/[:]+/g, "") ?? "0";
@@ -94,60 +89,84 @@ export default function PasswordReset() {
   if (!token || cleanToken !== cleanServerToken)
     return (
       <div>
-        {/* <img src={lost} alt="lost" /> */}
         <p>OOOPPS invalid token</p>
       </div>
     );
 
   return (
     <>
-      <div style={resetPasswordStyles}>
-        <form
-          style={passwordResetContainerStyles}
-          onSubmit={(e) => {
-            e.preventDefault();
+      <form
+        className={"passwordResetContainerStyles"}
+        style={passwordResetContainerStyles}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (credentials.newPassword === "") {
+            toast.error("Erreur dans l'enregistrement du mot de passe", {
+              style: {
+                border: "3px solid #EC5D5C",
+                padding: "4rem",
+                color: "#EC5D5C",
+              },
+              iconTheme: {
+                primary: "#EC5D5C",
+                secondary: "#FFFFFF",
+              },
+            });
+          } else {
             changePassword({
               variables: {
                 newPassword: credentials.newPassword,
                 changePasswordId: +credentials.id,
               },
-            })
-              .then(() => {
-                console.log("success");
+            }).then(() => {
+              toast.success("Nouveau mot de passe enregistré !");
+              console.log("success");
+              setTimeout(() => {
+                goToLogin();
+              }, 2000);
+            });
+          }
+        }}
+      >
+        <label htmlFor="newPassword">
+          <input
+            className={"inputStyles"}
+            style={inputStyles}
+            type={showPassword ? "text" : "password"}
+            id="newPassword"
+            placeholder="Nouveau mot de passe"
+            value={credentials.newPassword}
+            onChange={(e) =>
+              setCredentials({
+                id: cleanId ?? "",
+                newPassword: e.target.value,
               })
-              .catch(console.error);
-          }}
-        >
-          <label htmlFor="newPassword">
-            <input
-              style={inputStyles}
-              type={showPassword ? "text" : "password"}
-              id="newPassword"
-              placeholder="Nouveau mot de passe"
-              value={credentials.newPassword}
-              onChange={(e) =>
-                setCredentials({
-                  id: cleanId ?? "",
-                  newPassword: e.target.value,
-                })
-              }
-            ></input>
-            <button
-              type="button"
-              onClick={togglePassword}
-              style={{ color: "#EC5D5C" }}
-            >
-              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-            </button>
-          </label>
-          <div>
-            <button style={secondaryButtonStyles}>Retour</button>
-            <button type="submit" style={primaryButtonStyles}>
-              Valider
-            </button>
-          </div>
-        </form>
-      </div>
+            }
+          ></input>
+          <button
+            type="button"
+            onClick={togglePassword}
+            style={{ color: "#EC5D5C", marginLeft: "1rem" }}
+          >
+            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </button>
+        </label>
+        <div>
+          <button
+            type="submit"
+            className={"primaryButtonStyles"}
+            style={primaryButtonStyles}
+          >
+            Valider
+          </button>
+          <button
+            className={"secondaryButtonStyles"}
+            style={secondaryButtonStyles}
+          >
+            Retour
+          </button>
+        </div>
+      </form>
     </>
   );
 }

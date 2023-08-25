@@ -188,9 +188,9 @@ export default function ManageUsers() {
                             </svg>
                           </span>
                         </summary>
-                        <h3 className={"editUser_title"}>
+                        {/* <h3 className={"editUser_title"}>
                           Villes: {userCitiesList?.join(", ")}
-                        </h3>
+                        </h3> */}
                         {SuperAdminRoles.map((role, index) => {
                           return (
                             <div key={index} className={"editUser_container"}>

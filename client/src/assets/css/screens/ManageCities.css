@@ -83,6 +83,7 @@ input {
 }
 
 .tertiaryButton {
+    margin-top: 1rem;
     height: 2.5rem;
     width: 15rem;
     border-radius: 15px;

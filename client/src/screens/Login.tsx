@@ -50,6 +50,7 @@ export default function Login() {
                   console.log(error);
                   toast.error("Invalid credentials", {
                     style: {
+                      
                       border: "3px solid #EC5D5C",
                       padding: "4rem",
                       color: "#EC5D5C",

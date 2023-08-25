@@ -58,6 +58,7 @@ export default function AddManageCities() {
   const userCitiesList = userCities?.getUserCities?.cities?.map(
     (city) => city.name
   );
+  console.log(userCitiesList);
 
   //
   // FONCTIONS ONCLICK
@@ -102,7 +103,7 @@ export default function AddManageCities() {
           }`}
         />
         <div className="max-w-screen-xl mx-auto px-5 min-h-screen w-full cities_card_container">
-          {cities.map((city: ICity, index: number) => {
+          {cities?.map((city: ICity, index: number) => {
             if (
               userCitiesList?.includes(city.name) ||
               currentUserRole === "Super Administrator"

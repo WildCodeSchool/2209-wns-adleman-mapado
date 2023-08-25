@@ -10,6 +10,8 @@ export default function AddUserCity({
 
   const cities = data?.cities ?? [];
 
+  console.log(userCitiesList)
+
   function handleOnClickAssignCity(
     cityId: number,
     cityName: string,
@@ -20,16 +22,16 @@ export default function AddUserCity({
   }
 
   return (
-    <div className={"editCity_container"}>
-      <ul className="select-cities-container">
-        <h2 className={"editCity_title"}>Assigner une nouvelle ville</h2>
+    <div className={"editUserCity_container"}>
+      <ul className="select-userCities-container">
+        <h2 className={"editUserCity_title"}>Assigner une nouvelle ville</h2>
         {cities.map((city) => {
           if (!userCitiesList?.includes(city.name))
             return (
-              <li className="select-cities-container" key={city.name}>
-                <div className="select-city">
+              <li className="select-userCities-container" key={city.name}>
+                <div className="select-userCity">
                   <option
-                    className={"city-title"}
+                    className={"userCity-title"}
                     style={{ color: "#ec5d5c" }}
                     value={city.name}
                   >
