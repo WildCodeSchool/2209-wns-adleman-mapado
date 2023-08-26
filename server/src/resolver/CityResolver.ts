@@ -1,4 +1,4 @@
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Int, Mutation, Query, Resolver, Authorized } from "type-graphql";
 import City, {
   CityInput,
   CityRequested,
@@ -8,6 +8,7 @@ import datasource from "../db";
 import { ApolloError } from "apollo-server-errors";
 import { env } from "../environment";
 import Poi from "../entity/Poi";
+import { UserRole } from "../entity/User";
 
 @Resolver(City)
 export class CityResolver {
@@ -30,11 +31,13 @@ export class CityResolver {
     return city;
   }
 
+  @Authorized<UserRole>([UserRole.SUPERADMIN])
   @Mutation(() => City)
   async createCity(@Arg("data") data: CityInput): Promise<City> {
     return await datasource.getRepository(City).save(data);
   }
 
+  @Authorized<UserRole>([UserRole.SUPERADMIN])
   @Mutation(() => Boolean)
   async deleteCity(@Arg("id", () => Int) id: number): Promise<boolean> {
     const { affected } = await datasource.getRepository(City).delete(id);
@@ -42,6 +45,7 @@ export class CityResolver {
     return true;
   }
 
+  @Authorized<UserRole>([UserRole.SUPERADMIN])
   @Mutation(() => City)
   async updateCity(
     @Arg("id", () => Int) id: number,
@@ -63,6 +67,7 @@ export class CityResolver {
   // On stocke nom, lat, long et photo dans un objet
   // On enregistre l'objet dans notre bdd
 
+  @Authorized<UserRole>([UserRole.SUPERADMIN])
   @Mutation(() => String)
   async fetchCityName(
     @Arg("data") data: CityRequested
