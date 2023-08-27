@@ -25,6 +25,7 @@ import User, {
 import { env } from "../environment";
 import { ContextType } from "../index";
 import City from "../entity/City";
+import { hash } from "argon2";
 
 @Resolver(User)
 export class UserResolver {
@@ -37,6 +38,7 @@ export class UserResolver {
   @Mutation(() => User)
   async createUser(@Arg("data") data: UserInput): Promise<User> {
     const hashedPassword = await hashPassword(data.password);
+    console.log(hashedPassword)
     const createdAt = await Date.now();
     const user = await datasource
       .getRepository(User)
@@ -140,12 +142,13 @@ export class UserResolver {
     const user = await datasource
       .getRepository(User)
       .findOne({ where: { email } });
-    const hashedPassword = await hashPassword(password);
+    //const hashedPassword = await hashPassword(password);
+    //console.log(hashedPassword)
 
     if (
       user === null ||
       !user.hashedPassword ||
-      !(await verifyPassword(hashedPassword, user.hashedPassword))
+      !(await verifyPassword(password, user.hashedPassword))
     ) {
       throw new ApolloError("invalid credentials");
     }
