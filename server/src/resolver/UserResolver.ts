@@ -37,12 +37,18 @@ export class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Arg("data") data: UserInput): Promise<User> {
+    const {email}  = data;
     const hashedPassword = await hashPassword(data.password);
-    console.log(hashedPassword)
     const createdAt = await Date.now();
+
+    const userAlreadyExists = await datasource.getRepository(User).findOne({where: {email}});
+    
+    if (userAlreadyExists) throw new ApolloError("user already exists", "UNABLE_TO_REGISTER");
+
     const user = await datasource
       .getRepository(User)
       .save({ ...data, createdAt, hashedPassword });
+
     return user;
   }
 
