@@ -17,6 +17,8 @@ import Admin from "./screens/Admin";
 import ManageCategories from "./screens/ManageCategories";
 import IState from "./interfaces/IState";
 import { AnimatePresence } from "framer-motion";
+import ManageUsers from "./screens/ManageUsers";
+import { Toaster } from "react-hot-toast";
 
 const styles: CSS.Properties = {
     margin: 0,
@@ -71,7 +73,7 @@ function App() {
   
     return (
         <>
-            {/*<Toaster position="top-center"/>*/}
+            <Toaster position="top-center"/>
             <div style={styles}>
                 <Header
                     currentUrl={currentUrl}
@@ -91,6 +93,7 @@ function App() {
                         <Route path="/password/reset/:id/:token" element={<PasswordReset/>}/>
                         <Route path="/info/:cityName" element={<InfoCity/>}/>
                         <Route path="/manage-cities" element={<ManageCities/>}/>
+                        <Route path="/manage-users" element={<ManageUsers/>}/>
                         <Route path="/edit-city/:cityName" element={<EditCity/>}/>
                         <Route path="/admin" element={<Admin/>}/>
                         <Route path="/manage-categories" element={<ManageCategories/>}/>

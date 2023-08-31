@@ -24,6 +24,8 @@ export default function Login() {
 
   const navigateCreateAccount = () => navigate("/register");
 
+  const navigateHome = () => navigate("/cities-list");
+
   return (
     <>
       <div className={"loginStyle"}>
@@ -33,7 +35,6 @@ export default function Login() {
 
           </svg>
         </button>
-        {/*{currentUser && <Navigate to="/" replace={false} />}*/}
         <Card customClass={" registerCard"}>
           <form
             className={"loginContainer"}
@@ -42,11 +43,14 @@ export default function Login() {
               login({ variables: { data: credentials } })
                 .then(() => {
                   client.resetStore();
+                  navigateHome();
+                  console.log(currentUser?.profile.role);
                 })
                 .catch((error) => {
                   console.log(error);
                   toast.error("Invalid credentials", {
                     style: {
+                      
                       border: "3px solid #EC5D5C",
                       padding: "4rem",
                       color: "#EC5D5C",

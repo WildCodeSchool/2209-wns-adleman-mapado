@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useGetProfileQuery } from "../gql/generated/schema";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -9,6 +10,11 @@ export default function Admin() {
   const goBack = () => {
     navigate(-1);
   };
+
+  const { data: currentUser } = useGetProfileQuery({
+    errorPolicy: "ignore",
+  });
+  const currentUserRole = currentUser?.profile?.role;
 
   return (
     <Card>
@@ -19,12 +25,32 @@ export default function Admin() {
           </svg>
         </button>
         <h1 className={"title"}>Admin</h1>
-        <NavLink to={`/manage-cities`} className="country_link">
-          Paramétrer les villes
-        </NavLink>
-        <NavLink to={`/manage-categories`} className="country_link">
-          Paramétrer les catégories
-        </NavLink>
+        <p style={{margin: "2rem"}}>
+          {currentUserRole === "Super Administrator" && (
+            <NavLink to={`/manage-categories`} className="country_link">
+              Paramétrer les catégories
+            </NavLink>
+          )}
+        </p>
+
+        <p style={{margin: "2rem"}}>
+          {(currentUserRole === "Super Administrator" ||
+            currentUserRole === "City Administrator" ||
+            currentUserRole === "POI Creator") && (
+            <NavLink to={`/manage-cities`} className="country_link">
+              Paramétrer les villes
+            </NavLink>
+          )}
+        </p>
+
+        <p style={{margin: "2rem"}}>
+          {(currentUserRole === "Super Administrator" ||
+            currentUserRole === "City Administrator") && (
+            <NavLink to={`/manage-users`} className="country_link">
+              Paramétrer les utilisateurs
+            </NavLink>
+          )}
+        </p>
       </div>
     </Card>
   );

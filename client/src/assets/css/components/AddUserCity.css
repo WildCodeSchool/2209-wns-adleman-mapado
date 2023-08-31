@@ -1,0 +1,88 @@
+.modal_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  /* top: 0;
+  left: 0; */
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 50%;
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.select-userCities-container {
+  margin: 0 auto;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #173472;
+}
+
+.select-userCity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 20vw;
+  padding: 2rem;
+}
+
+.modal-select-button {
+  height: 2.5rem;
+  width: 6rem;
+  background-color: #ffffff;
+  border-radius: 15px;
+  border: 3px solid #173472;
+}
+
+.modal-close-button {
+  height: 2.5rem;
+  width: 15rem;
+  background-color: #ec5d5c;
+  border-radius: 15px;
+  border: 3px solid #173472;
+  color: #ffffff;
+}
+
+.editUserCity_container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(23, 52, 114, 0.2);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 20%;
+}
+
+.userCity-title {
+  font-family: Rubik, serif;
+  color: #ec5d5c;
+}
+
+.title {
+  color: #ffffff;
+  font-family: Rubik;
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.editUserCity_title {
+  color: #ec5d5c;
+  font-family: Rubik;
+  font-weight: 600;
+  font-size: 1.25rem;
+  padding: 1rem;
+  text-align: center;
+}

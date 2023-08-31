@@ -4,6 +4,7 @@
 @import "./components/AddPoi.css";
 @import "./components/Badge.css";
 @import "./components/BadgeEdit.css";
+@import "./components/AddUserCity.css";
 @import "screens/Home.css";
 @import "screens/Login.css";
 @import "screens/EmailPassword.css";
@@ -15,3 +16,5 @@
 @import "screens/CitiesList.css";
 @import "screens/Admin.css";
 @import "screens/ManageCategories.css";
+@import "screens/ManageUsers.css";
+/* @import "screens/PasswordReset.css"; */

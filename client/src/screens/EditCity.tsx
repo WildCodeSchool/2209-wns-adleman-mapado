@@ -1,8 +1,9 @@
 import {MouseEventHandler, useEffect, useState} from "react";
 import {
-    useGetCityQuery,
-    useUpdateCityMutation,
-    useDeletePoiMutation,
+  useGetCityQuery,
+  useUpdateCityMutation,
+  useDeletePoiMutation,
+  useGetProfileQuery,
 } from "../gql/generated/schema";
 import Card from "../components/Card";
 import ICity from "../interfaces/ICity";
@@ -12,6 +13,7 @@ import {useNavigate} from "react-router";
 import IPoi from "../interfaces/IPoi";
 import Rocket from "../assets/images/rocket.gif";
 import BadgeEdit from "../components/BadgeEdit";
+import { resetCaches } from "@apollo/client";
 
 export default function EditCity() {
     //
@@ -48,6 +50,10 @@ export default function EditCity() {
     //
     // MUTATIONS GRAPHQL
     //
+
+    const { data: currentUser } = useGetProfileQuery();
+    const currentUserRole = currentUser?.profile?.role;
+    
     const [updateCity] = useUpdateCityMutation({onCompleted: () => refetch()});
     const [deletePoi] = useDeletePoiMutation({onCompleted: () => refetch()});
     const {data, refetch} = useGetCityQuery({

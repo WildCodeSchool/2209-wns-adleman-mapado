@@ -4,34 +4,36 @@ import CSS from "csstype";
 // import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const buttonStyles: CSS.Properties = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    color: "#EC5D5C",
-    height: "fit-content",
-    width: "fit-content",
-    fontSize: "1.2rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  color: "#EC5D5C",
+  height: "fit-content",
+  width: "fit-content",
+  fontSize: "1.2rem",
 };
 
 export default function Logout() {
-    const { data: currentUser, client } = useGetProfileQuery();
+  const { data: currentUser, client } = useGetProfileQuery({
+    errorPolicy: "all",
+  });
 
-    const [logout] = useLogoutMutation();
+  const [logout] = useLogoutMutation({ errorPolicy: "all" });
 
-    return (
-        <>
-            <Link to="/login">
-                <button
-                    style={buttonStyles}
-                    onClick={async () => {
-                        await logout();
-                        await client.resetStore();
-                    }}
-                >
-                    {/* <AccountCircleOutlinedIcon fontSize={"large"} /> */}
-                    {currentUser ? "Log out" : "Log in"}
-                </button>
-            </Link>
-        </>
-    );
+  return (
+    <>
+      <Link to="/login">
+        <button
+          style={buttonStyles}
+          onClick={() => {
+            logout();
+            client.resetStore();
+          }}
+        >
+          {/* <AccountCircleOutlinedIcon fontSize={"large"} /> */}
+          {currentUser ? "Log out" : "Log in"}
+        </button>
+      </Link>
+    </>
+  );
 }
