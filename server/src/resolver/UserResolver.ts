@@ -84,6 +84,7 @@ export class UserResolver {
         return "data updated";
 
     }
+    
   @Authorized<UserRole>([UserRole.SUPERADMIN, UserRole.CITYADMIN])
   @Mutation(() => User)
   async updateUserCities(
